@@ -28,6 +28,7 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "htmling": "0.0.7",
     "pusher": "^1.0.6"
   }
 }

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--char set (lang above)-->
+  <meta charset="utf-8">
+
+  <!--device/browser shizzle-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--meta content-->
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png" />
+  <meta name="author" content="Ruth John (@rumyra)">
+  <meta name="dcterms.rightsHolder" content="Ruth John for Rumyra Ltd, United Kingdom, 2015">
+  <title>Come to Rumyras party!</title>
+
+  <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="bower_components/reveal.js/css/theme/black.css" id="theme">
+  <script src="bower_components/reveal.js/js/reveal.js"></script>
+
+  <!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+  <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+  <style type="text/css">
+  #avatarWall {display: -webkit-flex;}
+  #avatarWall img {width:10%; height:auto;}
+
+  </style>
+</head>
+<body class="talk">
+<button id="invite-accept">Invite accepted</button>
+  <div class="reveal">
+    <div class="slides"><section>
+        <section>
+          <h2>@rumyra</h2>
+          <p class="fragment fade-in">http://somebitlyhere</p>
+          <aside class="notes">
+            <p>Hi everyone, due to where we are - I used to live 5 minutes down the road & come here for club nights quite a bit - and due to the fact i'm doing the last but one talk of the day, I thought I might try & start the party a bit early.</p>
+            <p>And in a browser</p>
+            <p>Thing is, I'd rather not party by myself, so you're all invited - but you *do* need a github account</p>
+            <p>So go to that url, and enter your github username to accept my invite, to hopefully what will be, our browser party, you'll see dots appearing at the top of the talk - that's you. Please don't close your browser, you're gonna need it open later.</p>
+            <p>Whilst you do that, I'm gonna take 5 minutes to talk to you about something completely different.</p>
+          </aside>
+        </section>
+        <section>
+            <h2>MIDI</h2>
+            <p class="fragment fade-in">Protocol standardised in 1983</p>
+            <p class="fragment fade-in">Due to rise of electronic music & instruments</p>
+            <p class="fragment fade-in">Data events = notation, pitch & velocity</p>
+            <p class="fragment fade-in">Control signals = volume, panning, cues & clock signals</p>
+          <aside class="notes">
+            <p>MIDI - I know what you're thinking, we may be side tracking a little from JS, but bear with me.</p>
+            <p>MIDI - Musical Instrument Digital Interface. A protocol standardised in 1983 by a panel of music industry representatives - imagine that, a standardised format, decided by industry experts! (Maintained by MIDI Manufacturers Associations/MMA)</p>
+            <p>Rise of digital/electronic instruments in the late 70's</p>
+            <p>NOT audio itself, its data protocols to control that audio. Most common events carry data to specify notation, pitch & velocity, but also encorporates signals for volume, vinbrato, panning, cues & clock signals (that are used to sync tempo)</p>
+            <p>I get this doesn't mean too much right now, so let's put this practically - little bit of context</p>
+          </aside>
+        </section>
+        <section>
+          <h2>MIDI instruments</h2>
+          <h3>(aka controllers)</h3>
+          <aside class="notes">
+            <p>Such a huge range, you'll hear me refer to them as controllers a lot</p>
+          </aside>
+        </section>
+        <section data-background="images/midiConts.jpg">
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p>These are just some examples of MIDI instruments.</p>
+            <p>Top: Keyboard, synth, drum kit - also drum machines. You can also get things like guitar pedals, clarinet/sax type thing.</p>
+            <p><b>One thing to bear in mind</b> MIDI used to be expensive - the digitals intruments & controllers themselves ran into the hundreds if not thousands of pounds and DIN connectors were the data connectors of choice. This dictated in the computer world - expensive sound cards.</p>
+            <p>Bottom: Examples of basic controller. Launchpad (one first USB) - next two similar price AKAI LPD8 & Korg NanoPad2. Last icon iDJ</p>
+            <p>You can see why there's the MMA, making sure all the different manufacturers stay in line with the protocol</p>            
+            <p>Why is any of this relevant to you? Well we have access to this, in the lovely form of a web MIDI api</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Web MIDI API - maybe put data in here then show demo</h2>
+          <p class="fragment fade-in">Currently only supported by Chrome & Opera</p>
+          <p class="fragment fade-in">Use with the Web Audio API</p>
+          <p class="fragment fade-in">Need a MIDI controller:</p>
+          <p class="fragment fade-in">AKAI LPD8</p>
+          <aside class="notes">
+            <p>It's only supported in Chrome & Opera and in working draft status with W3C. It's cool that we have it & we can play.</p>
+            <p>But it's suddenly becoming more relevant. I've noticed we have a few people have accepted my invite to the party - and what does a party need?</p>
+            <p>You got it - music!</p>
+            <p>So this is the most common use for the MIDI protocol, to use with digital audio to create sounds.</p>
+            <p>You need a MIDI controller</p>
+            <p>I have the AKAI LPD8 with me.</p>
+          </aside>
+        </section>
+        <section data-state="audioDemo">
+          <h2>Show vid of AKAI LPD8 and it playing sounds</h2>
+          <video id="audioDemo"></video>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p>So what I've done with this, is allocate occilated sounds, created with the audio api, to the synth pads on the controller. So I press them and I make sounds. They're pressure sensitive, so the harder I press the louder the sounds.</p>
+            <p>I've also allocated some distortion to the dials, so when I play the sounds I can alter them</p>
+            <p>I'm not an amazing musician - I can hold a beat, but I'm not amazing, I could use some help</p>
+            <p>The other thing I was considering was does MIDI have to be hardware, considering it's just a data protocol, can we emulate that with software.</p>
+          </aside>
+        </section>
+        <section data-state="audioMidiDemo">
+          <h2>Send midi to everyone. Can we create a software MIDI emulator?</h2>
+          <button>Play drums & record & stop both</button>
+          <p>Count down?</p>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p>All those that accepted my invite, if you look back at your browser, you should see a mini version of a MIDI controller. One pad and one dial. A miniMIDI if you will.</p>
+            <button>Play drums & record & stop both</button>
+          </aside>
+        </section>
+        <section>
+          <h2>Stop sounds - maybe have a freeze screen 'welcome to rumyras party'</h2>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p></p>
+          </aside>
+        </section>
+        <section>
+          <h2>Party checklist</h2>
+          <ol>
+            <li class="fragment fade-in">Music</li>
+          </ol>
+          <aside class="notes">
+            <p>Awesome - thank you everyone. The party already probably had the most important part and that's music.</p>
+            <p>But the thing about MIDI (and I apologise to keep going on about it) was that really it is quite an awesome way to pass data around.</p>
+            <p>Enter if you please the MIDI show control</p>
+          </aside>
+        </section>
+        <section>
+          <h2>MIDI Show Control (MSC)</h2>
+          <p class="fragment fade-in">Extension of MIDI, using entertainment equipment to use the same protocol.</p>
+          <p class="fragment fade-in">Think lighting desks, fireworks, fountains...</p>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p>MSC enables all types of entertanment equipment to communicate using MIDI, basically. The MMA approved this in 1991. So we're talking lighting desks, other stage controls. Firework displays. The fountains outside big hotels in Las Vegas - controlled by MIDI.</p>
+            <p>So although this version of the protocol is made up of events such as go, stop, resume, load, fire, standby - it's actually still just MIDI data and thus you can use any of the MIDI controllers we saw earlier.</p>
+            <p>So I would quite like some sort of visual show at my party</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Party Checklist</h2>
+          <ol>
+            <li class="fragment fade-in">Music</li>
+            <li class="fragment fade-in">Visuals</li>
+          </ol>
+          <aside class="notes">
+            <p>Now just like we used the Audio API to create sound, we can use the animation API to create animations, to be controlled via MIDI.</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Web Animation API</h2>
+          <p class="fragment fade-in">CSS Animations, CSS Transitions & SVG Animations.</p>
+          <p class="fragment fade-in">Separates Animation Model and Timing Model.</p>
+          <aside class="notes">
+            <p>The Animation API encorporates css anims, transitions and SVG animations. You call the animate method on a DOM element, pass in some params to change the values and it animates.</p>
+            <p>You may be thinking why not just use CSS anims trans and svg anims - well you can, but the animation api also gives you a Timing Model Layer (it separates this from the animations layer), which gives you much more control & as animation is event based, this should probably sit in JS</p>
+            <p>Now you may remember aaggess ago when you accepted my invite, that you entered your github username - this allowed me to grab your avatar...</p>
+          </aside>
+        </section>
+
+        <section data-state="visualMidiDemo">
+          <h2>Github avatars</h2>
+          <div id="avatarWall">
+
+          </div>
+          <aside class="notes">
+            <p>Now, if you look at your browsers again the miniMidi is back, but this time we're gonna control the visuals.</p>
+            <p>If you press the PAD your avatar should invert and if you turn the dial you should loop through the hue value</p>
+            <p>So we can make this even better - what you didn't realise when you were making music earlier was that I was recording you. And didi I mention I'm a VJ</p>
+            <p>I mix visuals - I wote software - I use iDJ controller</p>
+            <p>Over view of software - it has two screens, picks up on music which generates visuals or animates those on screen, but also dictates the 'mixing' point so as I cross fade using the decks it should mix avatars</p>
+          </aside>
+        </section>
+        <section>
+          <h2>VJing</h2>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p></p>
+          </aside>
+        </section>
+        <section>
+          <h2>JAVASCRIPT!</h2>
+          <p class="fragment fade-in">Has just made a room full of musicians and visual artists!</p>
+          <aside class="notes">
+            <p></p>
+          </aside>
+        </section>
+        <section>
+          <h2>Browser APIs</h2>
+          <p class="fragment fade-in"></p>
+          <aside class="notes">
+            <p>There are a load of cool new browser apis - here a list of just some of them - and I know you may not get a chance in your every work to use them in the same way we just all have</p>
+  <p>But think a little bit harder about them for a second, think about completely different ways to use them - if it's all very confusing & overwhelming. It may not be part of your everyday work flow and you may not have a lot of spare time to be spending weekends building browser parties</p>
+          </aside>
+        </section>
+        <section>
+          <h2>I made a website for you</h2>
+          <p class="fragment fade-in">browserapis.wtf</p>
+          <aside class="notes">
+            <p>I made a website for you. It lists browser apis, resources, links & code examples. But most importantly, or at least I think so, uses. It's open source, it's new so it needs work, content, help from you, send me a pull request</p>
+            <p>I know some of this stuff maybe way in the future, but we should be keeping our ear to the ground with it. Who knows what you might discover. In the theme of a recent OxfordJS meetup - javascript is everywhere.</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Thank you for coming to my party</h2>
+          <h2>@rumyra</h2>
+          <aside class="notes">
+            <p></p>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Credits</h2>
+          <p><a href="">Play note MIDI edited from Dave Mackitosh's codepen</a></p>
+          <p><a href=""></a></p>
+          <p><a href=""></a></p>
+          <p><a href=""></a></p>
+          <p><a href=""></a></p>
+          <p><a href="http://codepen.io/jmichaliga/pen/lFGza?editors=001">Dial codepen by Justin Michaliga</a></p>
+        </section>
+
+    </section></div>
+  </div>
+
+<div id="pusher" data-key="{{PUSH_KEY}}"></div>
+<script src="bower_components/reveal.js/plugin/notes/notes.js"></script>
+<script src="audioVisual.js"></script>
+<script src="demos.js"></script>
+<script type="text/javascript">
+
+  // establish connection with pusher
+  var config = document.getElementById('pusher').dataset;
+  var pusher = new Pusher(config.key, {encrypted:true});
+
+  Pusher.channel_auth_endpoint = 'http://39367a56.ngrok.io/pusher/auth';
+  pusher.connection.bind('state_change', function(states) {
+      console.log("Pusher's current state is " + states.current);
+  });
+
+  // subscribe to channel
+  var channel = pusher.subscribe('private-party_channel');
+
+  channel.bind('pusher:subscription_succeeded', function() {
+    console.log('subscription succeeded');
+});
+
+  // callback on event
+  channel.bind('client-send_to_talk', function(data) {
+    console.log(data.midi_data);
+  });
+
+  //get a reference to the element
+  var sendToMidiBut = document.getElementById('invite-accept');
+
+  //add event listener
+  sendToMidiBut.addEventListener('click', function(event) {
+    channel.bind(
+      'send_to_midi',
+      {
+        "midi_data": [144, 48, 127]
+      }
+    );
+  });
+
+  // event binding~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // user accepts invite
+  var allUsers = [], userData = {};
+  channel.bind('client-register_user', function(data) {
+    // userData.name = data.userId;
+    // userData.image = data.userAvatar;
+    // allUsers.push(userData);
+    allUsers.push({'name': data.userId, 'image': data.userAvatar});
+    console.log(allUsers);
+  });
+
+  // create pics of everyone
+  function buildAvatarWall() {
+    var allImages = '';
+    for (i=0; i<allUsers.length; i++) {
+      allImages += '<img src="'+allUsers[i].image+'" id="'+allUsers[i].name+'" />'
+    }
+    document.getElementById('avatarWall').innerHTML = allImages;
+  }
+
+  // Reveal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Reveal.initialize({
+
+  // Display controls in the bottom right corner
+  controls: true,
+
+  // Display a presentation progress bar
+  progress: true,
+
+  // Display the page number of the current slide
+  slideNumber: true,
+
+  // Push each slide change to the browser history
+  history: false,
+
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+
+  // Enable the slide overview mode
+  overview: true,
+
+  // Vertical centering of slides
+  center: true,
+
+  // Enables touch navigation on devices with touch input
+  touch: true,
+
+  // Loop the presentation
+  loop: false,
+
+  // Change the presentation direction to be RTL
+  rtl: false,
+
+  // Turns fragments on and off globally
+  fragments: true,
+
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+
+  // Transition style
+  transition: 'default', // none/fade/slide/convex/concave/zoom
+
+  // Transition speed
+  transitionSpeed: 'default', // default/fast/slow
+
+  // Transition style for full page slide backgrounds
+  backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+
+  // Parallax background image
+  parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+  // Parallax background size
+  parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+  // Amount to move parallax background (horizontal and vertical) on slide change
+  // Number, e.g. 100
+  parallaxBackgroundHorizontal: '',
+  parallaxBackgroundVertical: ''
+
+});
+// stream video for audio demo
+  Reveal.addEventListener( 'audioDemo', function() {
+    showVideo(document.getElementById("audioDemo"));
+  }, false );
+
+  Reveal.addEventListener( 'audioMidiDemo', function() {
+    channel.trigger(
+      'client-show_music',
+      {
+        "divId": "music-midi-control"
+      }
+    );
+  }, false );
+
+  Reveal.addEventListener( 'visualMidiDemo', function() {
+    buildAvatarWall();
+    channel.trigger(
+      'client-show_visual',
+      {
+        "divId": "visual-midi-control"
+      }
+    );
+    channel.bind('client-invert', function(data) {
+      document.getElementById(data.userId).style.webkitFilter = "invert(100%)";
+    });
+  }, false );
+    
+
+</script>
+
+
+</body>
+</html>

@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var Pusher = require('pusher');
 var bodyParser = require('body-parser');
+var HTMLing = require('htmling');
 
 
 app.use(express.static(__dirname + '/public'));
@@ -10,19 +11,29 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded());
 //app.use(bodyParser.json());
 
+app.engine('html', HTMLing.express(__dirname + '/views/'));
+app.set('view engine', 'html');
+
 // main view index.html
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/talk', function(req, res){
-  res.sendFile(__dirname + '/public/talk.html');
+//  res.sendFile(__dirname + '/public/talk.html');
+    req.PUSH_KEY = process.env.PUSH_KEY;
+    res.render('talk', req);
 });
 
 app.get('/miniMidi', function(req, res){
-  res.header('SECRETSTUFF',process.env.PUSH_KEY);
-  res.sendFile(__dirname + '/public/miniMidi.html');
-  // req.PUSH_KEY = process.env.PUSH_KEY;
+//  res.sendFile(__dirname + '/public/miniMidi.html');
+    req.PUSH_KEY = process.env.PUSH_KEY;
+    res.render('miniMidi', req);
+});
+
+app.get('/blah', function(req,res) {
+    req.PUSH_KEY = process.env.PUSH_KEY;
+    res.render('blah', req);
 });
 
 // Pusher ~~~~~~~~~~~~~~~~~~~~~~~~~~~

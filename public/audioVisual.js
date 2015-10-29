@@ -68,14 +68,15 @@ var Effect = function() {
 
 
 // DIAL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function dial() {
+var dialVal = 0;
+function dial(dial, knob, active) {
   d = document,
   // $dial = d.getElementsByClassName('dial'),
-  $dial = d.getElementsByClassName('dial')[0],
+  // dial = d.getElementsByClassName('dial')[0],
   // $knob = d.getElementsByClassName('knob'),
-  $knob = d.getElementsByClassName('knob')[0],
+  // knob = d.getElementsByClassName('knob')[0],
   // $active = d.getElementsByClassName('dial-active'),
-  $active = d.getElementsByClassName('dial-active')[0],
+  // active = d.getElementsByClassName('dial-active')[0],
   big = 0,
   threshold = 0.05,
   rotation = 0, //avoid negative arc rotation
@@ -93,8 +94,8 @@ function dial() {
   mask.setAttribute('id','cp');
 
   mask.appendChild(path);
-  $dial.appendChild(mask);
-  path.appendChild($active);
+  dial.appendChild(mask);
+  path.appendChild(active);
 
   updateArc = function(dAngle, fromDial){
   
@@ -106,14 +107,14 @@ function dial() {
     var d = 'M0,87 a87,87 0 ' + big + ',1 ' + x + ',' + y;
     path.setAttribute('d', d);
     
-    $knob.style.webkitTransform = 'rotate('+(dAngle)+'deg)'; 
-    $knob.style.mozTransform = 'rotate('+(dAngle)+'deg)'; 
+    knob.style.webkitTransform = 'rotate('+(dAngle)+'deg)'; 
+    knob.style.mozTransform = 'rotate('+(dAngle)+'deg)'; 
       
   };
   
   //work out centre of dial
   var bodyRect = d.body.getBoundingClientRect(),
-    elemRect = $dial.getBoundingClientRect(),
+    elemRect = dial.getBoundingClientRect(),
     topOffset = elemRect.top - bodyRect.top,
     leftOffset = elemRect.left - bodyRect.left;
 
@@ -127,37 +128,39 @@ function dial() {
   
   updateArc(rotation);
   
-  $dial.addEventListener('mousedown',function(){
+  dial.addEventListener('mousedown',function(){
       sPoint = {q: 'active'};
   });
   
-  $dial.addEventListener('mousemove', function(ev){
+  dial.addEventListener('mousemove', function(ev){
   
     if(sPoint.q){
       dX = -(ev.pageX - centerX);
       dY = -(ev.pageY - centerY);
-      console.log(dX+','+dY);
+      // console.log(dX+','+dY);
        
       ang = Math.atan2(dY,dX);
       if(ang<0){ang = ang + 2*Math.PI;}
       
       if( Math.abs(refPoint.angle - ang) < 5 || !refPoint.angle){
         refPoint = {x: ev.pageX, y: ev.pageY, angle: ang};
-        //console.log(dX+", "+dY+" | r: "+refPoint.angle+" | d: "+refPoint.angle * (180/Math.PI));
+        // console.log(dX+", "+dY+" | r: "+refPoint.angle+" | d: "+refPoint.angle * (180/Math.PI));
         updateArc(refPoint.angle * (180/Math.PI), true);
+        dialVal = Math.floor(refPoint.angle * (70/Math.PI));
+        // console.log(dialVal);
       }
     }
   });
   
-  $dial.addEventListener('mouseup', function(){
+  dial.addEventListener('mouseup', function(){
     sPoint = {};
   });
   
-  $dial.addEventListener('touchstart', function(ev){
+  dial.addEventListener('touchstart', function(ev){
     sPoint = {q: 'active'};
   });
   
-  $dial.addEventListener('touchmove', function(ev){
+  dial.addEventListener('touchmove', function(ev){
       
     if(sPoint.q){
       dX = -(ev.touches[0].pageX - centerX);
@@ -173,20 +176,21 @@ function dial() {
       }
     }        
   });
-  $dial.addEventListener('touchend', function(ev){
+  dial.addEventListener('touchend', function(ev){
     refPoint = {};
   });
 
   //Gesture Events
-  $dial.addEventListener('gesturechange', function(g){
+  dial.addEventListener('gesturechange', function(g){
     rotation = (rotation + g.rotation % 360);
-    $knob.style.webkitTransform = 'rotate('+(rotation)+'deg)'; 
+    knob.style.webkitTransform = 'rotate('+(rotation)+'deg)'; 
     updateArc(rotation*_piOver180, true);
   });
   
-  $dial.addEventListener('gestureend', function(g){
+  dial.addEventListener('gestureend', function(g){
     rotation = rotation;
   });
+
 }
 
 

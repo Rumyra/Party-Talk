@@ -81,9 +81,11 @@ input[type="submit"] {background-color: rgb(255,148,10);}
 
 .container > section {
   width: 300px; margin:0px auto;
-  /*display: none;*/
+  display: none;
 }
 #party-invite {display: block;}
+/*#music-midi-control {display: block;}*/
+/*#visual-midi-control {display: block;}*/
 
 /*midi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .pad {
@@ -101,6 +103,7 @@ input[type="submit"] {background-color: rgb(255,148,10);}
 .pad-active {
   border-color:rgb(255,148,10);
 }
+#visual-midi-control .pad:active {border-color:rgb(0,100,200);}
 
 .dial {
   position: relative; display: inline-block; margin:0px 60px 60px;
