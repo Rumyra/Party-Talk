@@ -1,0 +1,33 @@
+{
+  "name": "Party-Talk",
+  "version": "1.0.0",
+  "description": "Hopefully a talk about a party, using browser apis (if it works)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rumyra/Party-Talk.git"
+  },
+  "keywords": [
+    "PARTY",
+    "browser",
+    "apis",
+    "midi",
+    "audio",
+    "animation",
+    "device"
+  ],
+  "author": "Ruth John",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rumyra/Party-Talk/issues"
+  },
+  "homepage": "https://github.com/Rumyra/Party-Talk",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "pusher": "^1.0.6"
+  }
+}

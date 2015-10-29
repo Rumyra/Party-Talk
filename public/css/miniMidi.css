@@ -1,0 +1,139 @@
+html, body, div, span, applet, object, iframe,
+header, hgroup, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, time,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+figure, figcaption, video, audio, img,
+fieldset, form, label, legend, input, button, select,
+table, caption, tbody, tfoot, thead, tr, th, td,
+section, article, canvas, nav, footer, aside,
+figure {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+section, article, aside, footer, nav, header, hgroup, details, figure, figcaption, summary { display: block; }
+audio, canvas, video { display: inline-block; }
+/*Prevents iOS text size adjust after orientation change, without disabling user zoom.*/
+html { -webkit-text-size-adjust: 100%; }
+[hidden] { display: none; }
+:focus { outline: 0; }
+
+body {
+  background-image:-webkit-linear-gradient(45deg,black,white);
+  background-size: 4px 4px;
+  font-family: 'helvetica neue', 'helvetica', 'arial', sans-serif;
+  font-size: 100%;
+  color: rgb(245,245,245);
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-shadow:0px 1px 1px rgba(0,0,0,0.8);
+}
+/*basics~~~~~~~~~~~~~~~~~~~~~~~~*/
+h2, p {padding:1.5em 0px 0px;}
+label, input {margin:1.5em 0px;}
+
+label, input {display:block; font-size: 1em;}
+.label-warn {
+  -webkit-animation: labelWarn 0.7s 3;
+  -moz-animation:    labelWarn 0.7s 3;
+  -o-animation:      labelWarn 0.7s 3;
+  animation:         labelWarn 0.7s 3;
+}
+@-webkit-keyframes labelWarn {
+  0%   { color: rgb(245,245,245); }
+  50%   { color: rgb(255,148,10); }
+  100%   { color: rgb(245,245,245); }
+}
+@-moz-keyframes labelWarn {
+  0%   { color: rgb(245,245,245); }
+  50%   { color: rgb(255,148,10); }
+  100%   { color: rgb(245,245,245); }
+}
+@-o-keyframes labelWarn {
+  0%   { color: rgb(245,245,245); }
+  50%   { color: rgb(255,148,10); }
+  100%   { color: rgb(245,245,245); }
+}
+@keyframes labelWarn {
+  0%   { color: rgb(245,245,245); }
+  50%   { color: rgb(255,148,10); }
+  100%   { color: rgb(245,245,245); }
+}
+input {
+  padding:1em; width:100%;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+input[type="text"] {border:4px solid rgb(150,150,150);}
+input[type="text"]:focus {border:4px solid rgb(255,148,10);}
+input[type="submit"] {background-color: rgb(255,148,10);}
+
+.container {
+  background-color:rgba(50,50,50,0.95);
+  min-height: 100vh;
+}
+
+.container > section {
+  width: 300px; margin:0px auto;
+  /*display: none;*/
+}
+#party-invite {display: block;}
+
+/*midi~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.pad {
+  display: inline-block; width: 200px; height:180px; margin:50px;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+  background-color:rgba(60,60,60,0.95);
+  border:6px solid rgb(150,150,150);
+  border-radius:2px;
+  -moz-box-shadow: 8px 8px 10px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 8px 8px 10px rgba(0,0,0,0.2);
+  font-size: 0px;
+}
+.pad-active {
+  border-color:rgb(255,148,10);
+}
+
+.dial {
+  position: relative; display: inline-block; margin:0px 60px 60px;
+  width: 180px; height: 180px;
+}
+
+.knob {
+  width: 168px; height: 168px;
+  background-image:
+    -moz-linear-gradient(left, transparent 40%, rgb(60,60,60) 40%),
+    -moz-linear-gradient(top, rgb(60,60,60) 45%, white 45%, white 55%, rgb(60,60,60) 55%)
+    ;
+  background-image:
+    -webkit-linear-gradient(left, transparent 40%, rgb(60,60,60) 40%),
+    -webkit-linear-gradient(top, rgb(60,60,60) 45%, white 45%, white 55%, rgb(60,60,60) 55%)
+    ;
+  border:2px solid rgb(65,65,65);
+  -moz-box-shadow: 8px 8px 10px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 8px 8px 10px rgba(0,0,0,0.2);
+  top:6px; left:6px; border-radius: 90px;
+}
+.dial svg {
+  position: absolute; top:0px; left:0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
