@@ -12,7 +12,7 @@ var effectAmount = 60;
 var Note = function () {
 
   function Note(note, velocity) {
-    this.NOTE = note * 10;
+    this.NOTE = note;
     this.VELOCITY = velocity / 127;
     this.AMOUNT = effectAmount*100;
     // this.AMOUNT = 6000;
@@ -35,7 +35,7 @@ var Note = function () {
 
     console.log('NOTE %s @ %s', this.NOTE, this.VELOCITY);
     this.GAIN.gain.value = this.VELOCITY;
-    this.OSC.type = 'square';
+    this.OSC.type = 'sine';
     this.OSC.frequency.value = this.NOTE;
   }
   Note.prototype.play = function play() {
@@ -50,33 +50,77 @@ var Note = function () {
 
 }();
 
-var Effect = function() {
 
-  function Effect(source, amount) {
-    this.AMOUNT = amount*100;
-    this.HIGHPASS = AUDIO_CONTEXT.createBiquadFilter();
-    this.HIGHPASS.type = "highpass";
-    this.HIGHPASS.frequency.value = this.AMOUNT;
-    this.HIGHPASS.Q.value = 28;
-    source.connect(this.HIGHPASS);
-    this.HIGHPASS.connect(AUDIO_CONTEXT.destination);
-    console.log('AMOUNT:'+this.AMOUNT);
+
+var oscillatorOpts = {
+  frequencies: [196, 220, 261.63, 329.63, 392, 440],
+  waveTypes: ["sine", "square", "triangle"]
+};
+// simple start oscillator function for miniMidi
+// type can be 0-4 (default sine), 
+function createOsc(audioContext, frequency, fxType, waveType) {
+  waveType = typeof waveType !== 'undefined' ?  waveType : "sine";
+  var oscillator = audioContext.createOscillator();
+  oscillator.type = waveType;
+  oscillator.frequency.value = frequency;
+  oscillator.start(0);
+  
+  // Create GainNode  
+  var gain = audioContext.createGain(); // Create gain node
+  gain.gain.value = 0.5; // Set gain to full volume
+
+  // Create filter
+  var fxFilter;
+  switch (fxType) {
+    case 1:
+      fxFilter = audioContext.createBiquadFilter();
+      fxFilter.type = "lowpass";
+      fxFilter.Q.value = 80;
+      break;
+    case 2:
+      fxFilter = audioContext.createBiquadFilter();
+      fxFilter.type = "highpass";
+      fxFilter.Q.value = 32;
+      break;
+    case 3:
+      fxFilter = audioContext.createWaveShaper();
+      fxFilter.oversample = '4x';
+      break;
   }
-  return Effect;
+      
 
-}();
+  // Connect the Nodes
+  oscillator.connect(fxFilter); // Connect oscillator to gain
+  fxFilter.connect(gain); // Connect gain to filter
+  gain.connect(audioContext.destination);
+  return {osc: oscillator, fx: fxFilter};
+}
+function destroyOsc(oscillator) {
+  oscillator.stop();
+  oscillator.disconnect();
+}
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function makeDistortionCurve(amount) {
+  var k = typeof amount === 'number' ? amount : 50,
+    n_samples = 44100,
+    curve = new Float32Array(n_samples),
+    deg = Math.PI / 180,
+    i = 0,
+    x;
+  for ( ; i < n_samples; ++i ) {
+    x = i * 2 / n_samples - 1;
+    curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+  }
+  return curve;
+};
 
 
 // DIAL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var dialVal = 0;
-function dial(dial, knob, active) {
+function dial(dial, knob, active, visual) {
   d = document,
-  // $dial = d.getElementsByClassName('dial'),
-  // dial = d.getElementsByClassName('dial')[0],
-  // $knob = d.getElementsByClassName('knob'),
-  // knob = d.getElementsByClassName('knob')[0],
-  // $active = d.getElementsByClassName('dial-active'),
-  // active = d.getElementsByClassName('dial-active')[0],
   big = 0,
   threshold = 0.05,
   rotation = 0, //avoid negative arc rotation
@@ -87,7 +131,8 @@ function dial(dial, knob, active) {
   mask.setAttribute('height','180');
   
   path = d.createElementNS(ns, 'path');
-  path.setAttribute('stroke','#ff940a');
+  strokeCol = visual ? '#0ac8e6' : '#ff940a';
+  path.setAttribute('stroke',strokeCol);
   path.setAttribute('fill-opacity','0');
   path.setAttribute('stroke-width','6');
   path.setAttribute('fill', '#FFF');
@@ -147,7 +192,6 @@ function dial(dial, knob, active) {
         // console.log(dX+", "+dY+" | r: "+refPoint.angle+" | d: "+refPoint.angle * (180/Math.PI));
         updateArc(refPoint.angle * (180/Math.PI), true);
         dialVal = Math.floor(refPoint.angle * (70/Math.PI));
-        // console.log(dialVal);
       }
     }
   });
@@ -173,6 +217,7 @@ function dial(dial, knob, active) {
         refPoint = {x: ev.pageX, y: ev.pageY, angle: ang};
         //console.log(dX+", "+dY+" | r: "+refPoint.angle+" | d: "+refPoint.angle * (180/Math.PI));
         updateArc(refPoint.angle * (180/Math.PI), true);
+        dialVal = Math.floor(refPoint.angle * (70/Math.PI));
       }
     }        
   });

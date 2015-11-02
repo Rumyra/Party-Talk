@@ -18,7 +18,7 @@
   <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
   <script src="audioVisual.js"></script>
 </head>
-<body class="mini-midi">
+<body>
 <div class="container">
 
   <section id="party-invite">
@@ -57,7 +57,10 @@
 <script type="text/javascript">
 
   // dom vars
-  var musicMidi = document.getElementById('music-midi-control'),
+  var inviteForm = document.getElementById('party-invite'),
+    holdingDiv = document.getElementById('holding'),
+
+    musicMidi = document.getElementById('music-midi-control'),
     musicPad = musicMidi.getElementsByClassName('pad')[0],
     musicDial = musicMidi.getElementsByClassName('dial')[0],
     musicKnob = musicMidi.getElementsByClassName('knob')[0],
@@ -85,33 +88,6 @@
     console.log('subscription succeeded');
   });
 
-
-  // callback on event
-  channel.bind('client-send_to_midi', function(data) {
-    console.log(data.midi_data);
-  });
-
-  //get a reference to the element
-  var sendToMeBut = document.getElementById('music-midi-control').getElementsByClassName('pad')[0];
-
-  //add event listener
-  sendToMeBut.addEventListener('click', function(event) {
-    channel.trigger(
-      'client-send_to_talk',
-      {
-        "midi_data": [144, 48, 127]
-      }
-    );
-    
-  });
-  sendToMeBut.addEventListener('mousedown', function(event) {
-    var note = new Note(220, 60);
-    note.play();
-    this.addEventListener('mouseup', function(event) {
-      note.stop();
-    });
-  });
-
 // CHECK ALL STUFF ABOVE THIS POINT - PROBS NOT NEEDED
 // Form stuff ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var username = '';
@@ -135,8 +111,8 @@ function formStuff() {
     // send event
     getGitAvatar(username);
     // show hide form
-    document.getElementById('party-invite').style.display = 'none';
-    document.getElementById('holding').style.display = 'block';
+    inviteForm.style.display = 'none';
+    holdingDiv.style.display = 'block';
 
   }
 }
@@ -167,36 +143,97 @@ function getGitAvatar(username) {
 
 // audio stuff
 channel.bind('client-show_music', function(data) {
-  document.getElementById('holding').style.display = 'none';
-  document.getElementById(data.divId).style.display = 'block';
+  inviteForm.style.display = 'none';
+  holdingDiv.style.display = 'none';
+  musicMidi.style.display = 'block';
   dial(musicDial, musicKnob, musicActive);
-  window.setInterval(console.log(dialVal), 300);
-  // console.log(dialVal);
 });
+var audioAPI = new (window.AudioContext || window.webkitAudioContext)();
+var oscillator,
+  freqIndex = getRandomInt(0,5),
+  frequency = oscillatorOpts.frequencies[freqIndex],
+  fxIndex = getRandomInt(1,3),
+  waveIndex = getRandomInt(0,2),
+  waveType = oscillatorOpts.waveTypes[waveIndex],
+  playing = false;
+  console.log(freqIndex+'-'+fxIndex+'-'+waveIndex);
+musicPad.addEventListener('click', function(event) {
+  if (playing) {
+    destroyOsc(oscillator.osc);
+    playing = false;
+  } else {
+    oscillator = createOsc(audioAPI, frequency, fxIndex, waveType);
+    switch (fxIndex) {
+      case 1:
+        updateFxOne();
+        break;
+      case 2:
+        updateFxTwo();
+        break;
+      case 3:
+        updateFxThree();
+        break;
+    }
+    playing = true;
+  }
+});
+
+function updateFxOne() {
+  requestAnimationFrame(updateFxOne);
+  oscillator.fx.frequency.value = (dialVal*10)+200;
+}
+function updateFxTwo() {
+  requestAnimationFrame(updateFxTwo);
+  oscillator.fx.frequency.value = dialVal*10;
+}
+function updateFxThree() {
+  requestAnimationFrame(updateFxThree);
+  oscillator.fx.curve = makeDistortionCurve(dialVal*10);
+}
 
 
 // Visual demo
-channel.bind('client-show_div', function(data) {
+channel.bind('client-show_visual', function(data) {
   console.log(data);
-  if (data.divId === "music-midi-control") {
-    document.getElementById('holding').style.display = 'none';
-  } else {
-    document.getElementById('music-midi-control').style.display = 'none';
-  }
-  document.getElementById(data.divId).style.display = 'block';
+  musicMidi.style.display = 'none';
+  visualMidi.style.display = 'block';
+  document.getElementsByTagName('body')[0].className = 'midi-light';
+  dialVal = 0;
+  dial(visualDial, visualKnob, visualActive, true);
 });
 // press button send invert event
 var visualMidi = document.getElementById('visual-midi-control');
 var visualPad = visualMidi.getElementsByClassName('pad')[0];
 
+var inverted = false;
 visualPad.addEventListener("click", function(ev) {
+  inverted = inverted ? false : true;
   console.log('clicked');
   channel.trigger(
     'client-invert',
     {
-      "userId": username
+      "userId": username,
+      "invert": inverted
     }
   );
+});
+visualDial.addEventListener('mousedown', function(ev) {
+  
+  var sendRotate = window.setInterval(function() {
+    console.log(dialVal);
+    channel.trigger(
+      'client-rotate',
+      {
+        "userId": username,
+        "rotate": dialVal
+      }
+    );
+  }, 5000);
+
+  this.addEventListener('mouseup', function() {
+    window.clearInterval(sendRotate);
+  });
+
 });
 
 

@@ -59,7 +59,6 @@ function onMIDIFailure(e) {
 function showVideo(vidEl) {
   var vid = navigator.mediaDevices.getUserMedia({ audio: false, video: true });
   vid.then(function(mediaStream) {
-    // var video = document.querySelector('video');
     vidEl.src = window.URL.createObjectURL(mediaStream);
     vidEl.onloadedmetadata = function(e) {
       vidEl.play();

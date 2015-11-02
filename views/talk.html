@@ -17,18 +17,31 @@
 
   <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.css">
   <link rel="stylesheet" href="bower_components/reveal.js/css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="theme">
   <script src="bower_components/reveal.js/js/reveal.js"></script>
 
   <!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
   <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
   <style type="text/css">
-  #avatarWall {display: -webkit-flex;}
-  #avatarWall img {width:10%; height:auto;}
+  #link-join {padding: 5px 10px 0px; text-align: center;}
+  #link-join a {color:white; font-family: sans-serif; text-decoration: none; font-size: 1.4em;}
+  #link-join i {display: inline-block; margin: 0px 8px; width:16px; height:16px; border-radius:10px; background-color: rgb(255,148,10);}
+
+  #avatarWall {
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  #avatarWall img {
+    width:15vw; height:15vw;
+  }
 
   </style>
 </head>
 <body class="talk">
-<button id="invite-accept">Invite accepted</button>
+  <div id="link-join">
+    <p><a href="">Somebitly.here</a></p>
+  </div>
   <div class="reveal">
     <div class="slides"><section>
         <section>
@@ -64,7 +77,6 @@
           </aside>
         </section>
         <section data-background="images/midiConts.jpg">
-          <p class="fragment fade-in"></p>
           <aside class="notes">
             <p>These are just some examples of MIDI instruments.</p>
             <p>Top: Keyboard, synth, drum kit - also drum machines. You can also get things like guitar pedals, clarinet/sax type thing.</p>
@@ -75,7 +87,24 @@
           </aside>
         </section>
         <section>
-          <h2>Web MIDI API - maybe put data in here then show demo</h2>
+          <h2>Web MIDI API</h2>
+          <pre><code data-trim>navigator.requestMIDIAccess({ sysex: false }).then(onMIDISuccess, onMIDIFailure);
+
+function onMIDISuccess(midiControl) {
+  var MIDI = midiControl;
+  MIDI.inputs.forEach(function (input) {
+    console.log(input.onmidimessage.data)
+  }
+}
+          </code></pre>
+          <p class="fragment fade-in">[144, 5, 64]</p>
+          <aside class="notes">
+            <p>Looks a little like this.</p>
+            <p>Data you receive from a device looks like this</p>
+          </aside>
+        </section>
+        <section data-state="audioDemo">
+          <h2>Web MIDI API</h2>
           <p class="fragment fade-in">Currently only supported by Chrome & Opera</p>
           <p class="fragment fade-in">Use with the Web Audio API</p>
           <p class="fragment fade-in">Need a MIDI controller:</p>
@@ -89,10 +118,8 @@
             <p>I have the AKAI LPD8 with me.</p>
           </aside>
         </section>
-        <section data-state="audioDemo">
-          <h2>Show vid of AKAI LPD8 and it playing sounds</h2>
-          <video id="audioDemo"></video>
-          <p class="fragment fade-in"></p>
+        <section>
+          <video></video>
           <aside class="notes">
             <p>So what I've done with this, is allocate occilated sounds, created with the audio api, to the synth pads on the controller. So I press them and I make sounds. They're pressure sensitive, so the harder I press the louder the sounds.</p>
             <p>I've also allocated some distortion to the dials, so when I play the sounds I can alter them</p>
@@ -101,27 +128,24 @@
           </aside>
         </section>
         <section data-state="audioMidiDemo">
-          <h2>Send midi to everyone. Can we create a software MIDI emulator?</h2>
-          <button>Play drums & record & stop both</button>
-          <p>Count down?</p>
-          <p class="fragment fade-in"></p>
+          <h2>Can we create one, <span class="fragment fade-in">giant, </span><span class="fragment fade-in">crowd sourced, </span><span class="fragment fade-in">emulated, </span><span class="fragment fade-in">MIDI controller?</span></h2>
+          <audio controls src="drumbeat.mp3"></audio>
           <aside class="notes">
             <p>All those that accepted my invite, if you look back at your browser, you should see a mini version of a MIDI controller. One pad and one dial. A miniMIDI if you will.</p>
             <button>Play drums & record & stop both</button>
           </aside>
         </section>
         <section>
-          <h2>Stop sounds - maybe have a freeze screen 'welcome to rumyras party'</h2>
-          <p class="fragment fade-in"></p>
+          <h1>Stop!</h1>
           <aside class="notes">
             <p></p>
           </aside>
         </section>
         <section>
           <h2>Party checklist</h2>
-          <ol>
-            <li class="fragment fade-in">Music</li>
-          </ol>
+          <ul>
+            <li class="fragment fade-in">✓  Music</li>
+          </ul>
           <aside class="notes">
             <p>Awesome - thank you everyone. The party already probably had the most important part and that's music.</p>
             <p>But the thing about MIDI (and I apologise to keep going on about it) was that really it is quite an awesome way to pass data around.</p>
@@ -132,7 +156,6 @@
           <h2>MIDI Show Control (MSC)</h2>
           <p class="fragment fade-in">Extension of MIDI, using entertainment equipment to use the same protocol.</p>
           <p class="fragment fade-in">Think lighting desks, fireworks, fountains...</p>
-          <p class="fragment fade-in"></p>
           <aside class="notes">
             <p>MSC enables all types of entertanment equipment to communicate using MIDI, basically. The MMA approved this in 1991. So we're talking lighting desks, other stage controls. Firework displays. The fountains outside big hotels in Las Vegas - controlled by MIDI.</p>
             <p>So although this version of the protocol is made up of events such as go, stop, resume, load, fire, standby - it's actually still just MIDI data and thus you can use any of the MIDI controllers we saw earlier.</p>
@@ -141,10 +164,10 @@
         </section>
         <section>
           <h2>Party Checklist</h2>
-          <ol>
-            <li class="fragment fade-in">Music</li>
-            <li class="fragment fade-in">Visuals</li>
-          </ol>
+          <ul>
+            <li class="fragment fade-in">✓&nbsp;&nbsp;Music</li>
+            <li class="fragment fade-in">&nbsp;&nbsp;&nbsp;Visuals</li>
+          </ul>
           <aside class="notes">
             <p>Now just like we used the Audio API to create sound, we can use the animation API to create animations, to be controlled via MIDI.</p>
           </aside>
@@ -161,9 +184,19 @@
         </section>
 
         <section data-state="visualMidiDemo">
-          <h2>Github avatars</h2>
           <div id="avatarWall">
-
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" id="rumyra" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
+            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
           </div>
           <aside class="notes">
             <p>Now, if you look at your browsers again the miniMidi is back, but this time we're gonna control the visuals.</p>
@@ -173,13 +206,12 @@
             <p>Over view of software - it has two screens, picks up on music which generates visuals or animates those on screen, but also dictates the 'mixing' point so as I cross fade using the decks it should mix avatars</p>
           </aside>
         </section>
-        <section>
+        <!-- <section>
           <h2>VJing</h2>
-          <p class="fragment fade-in"></p>
           <aside class="notes">
             <p></p>
           </aside>
-        </section>
+        </section> -->
         <section>
           <h2>JAVASCRIPT!</h2>
           <p class="fragment fade-in">Has just made a room full of musicians and visual artists!</p>
@@ -189,7 +221,10 @@
         </section>
         <section>
           <h2>Browser APIs</h2>
-          <p class="fragment fade-in"></p>
+          <div id="apiList" class="fragment fade-in">
+            <p></p>
+            <p></p>
+          </div>
           <aside class="notes">
             <p>There are a load of cool new browser apis - here a list of just some of them - and I know you may not get a chance in your every work to use them in the same way we just all have</p>
   <p>But think a little bit harder about them for a second, think about completely different ways to use them - if it's all very confusing & overwhelming. It may not be part of your everyday work flow and you may not have a lot of spare time to be spending weekends building browser parties</p>
@@ -217,7 +252,7 @@
           <p><a href=""></a></p>
           <p><a href=""></a></p>
           <p><a href=""></a></p>
-          <p><a href=""></a></p>
+          <p><a href="https://www.youtube.com/watch?v=B-UsdgZfiTQ">Drum track</a></p>
           <p><a href="http://codepen.io/jmichaliga/pen/lFGza?editors=001">Dial codepen by Justin Michaliga</a></p>
         </section>
 
@@ -226,9 +261,14 @@
 
 <div id="pusher" data-key="{{PUSH_KEY}}"></div>
 <script src="bower_components/reveal.js/plugin/notes/notes.js"></script>
+<script src="bower_components/reveal.js/plugin/highlight/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script src="audioVisual.js"></script>
 <script src="demos.js"></script>
 <script type="text/javascript">
+
+  var linkJoin = document.getElementById('link-join'),
+    allVids = document.getElementsByTagName('video');
 
   // establish connection with pusher
   var config = document.getElementById('pusher').dataset;
@@ -252,17 +292,17 @@
   });
 
   //get a reference to the element
-  var sendToMidiBut = document.getElementById('invite-accept');
+  // var sendToMidiBut = document.getElementById('invite-accept');
 
   //add event listener
-  sendToMidiBut.addEventListener('click', function(event) {
-    channel.bind(
-      'send_to_midi',
-      {
-        "midi_data": [144, 48, 127]
-      }
-    );
-  });
+  // sendToMidiBut.addEventListener('click', function(event) {
+  //   channel.bind(
+  //     'send_to_midi',
+  //     {
+  //       "midi_data": [144, 48, 127]
+  //     }
+  //   );
+  // });
 
   // event binding~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // user accepts invite
@@ -272,6 +312,8 @@
     // userData.image = data.userAvatar;
     // allUsers.push(userData);
     allUsers.push({'name': data.userId, 'image': data.userAvatar});
+    var iEl = document.createElement("i");
+    linkJoin.getElementsByTagName('p')[0].appendChild(iEl);
     console.log(allUsers);
   });
 
@@ -297,59 +339,13 @@ Reveal.initialize({
   slideNumber: true,
 
   // Push each slide change to the browser history
-  history: false,
+  history: true,
 
   // Enable keyboard shortcuts for navigation
   keyboard: true,
 
-  // Enable the slide overview mode
-  overview: true,
-
-  // Vertical centering of slides
-  center: true,
-
-  // Enables touch navigation on devices with touch input
-  touch: true,
-
-  // Loop the presentation
-  loop: false,
-
-  // Change the presentation direction to be RTL
-  rtl: false,
-
-  // Turns fragments on and off globally
-  fragments: true,
-
-  // Flags if the presentation is running in an embedded mode,
-  // i.e. contained within a limited portion of the screen
-  embedded: false,
-
-  // Flags if we should show a help overlay when the questionmark
-  // key is pressed
-  help: true,
-
-  // Flags if speaker notes should be visible to all viewers
-  showNotes: false,
-
-  // Number of milliseconds between automatically proceeding to the
-  // next slide, disabled when set to 0, this value can be overwritten
-  // by using a data-autoslide attribute on your slides
-  autoSlide: 0,
-
-  // Stop auto-sliding after user input
-  autoSlideStoppable: true,
-
-  // Enable slide navigation via mouse wheel
-  mouseWheel: false,
-
-  // Hides the address bar on mobile devices
-  hideAddressBar: true,
-
-  // Opens links in an iframe preview overlay
-  previewLinks: false,
-
   // Transition style
-  transition: 'default', // none/fade/slide/convex/concave/zoom
+  transition: 'fade', // none/fade/slide/convex/concave/zoom
 
   // Transition speed
   transitionSpeed: 'default', // default/fast/slow
@@ -374,10 +370,12 @@ Reveal.initialize({
 });
 // stream video for audio demo
   Reveal.addEventListener( 'audioDemo', function() {
-    showVideo(document.getElementById("audioDemo"));
+    showVideo(allVids[0]);
   }, false );
-
+  
   Reveal.addEventListener( 'audioMidiDemo', function() {
+    // allVids[0].pause();
+    // vidStream.stop();
     channel.trigger(
       'client-show_music',
       {
@@ -394,11 +392,33 @@ Reveal.initialize({
         "divId": "visual-midi-control"
       }
     );
-    channel.bind('client-invert', function(data) {
-      document.getElementById(data.userId).style.webkitFilter = "invert(100%)";
-    });
-  }, false );
     
+  }, false );
+
+channel.bind('client-invert', function(data) {
+  avatarImg = document.getElementById(data.userId);
+  if (data.invert) {
+    invertImage(avatarImg);
+  } else {
+    revertImage(avatarImg);
+  }
+});
+channel.bind('client-rotate', function(data) {
+  avatarImg = document.getElementById(data.userId);
+  rotateImage(avatarImg, data.rotate);
+});
+function invertImage(imgEl) {
+  imgEl.style.webkitFilter = 'invert(100%)';
+}
+
+function revertImage(imgEl) {
+  imgEl.style.webkitFilter = 'invert(0%)';
+}
+
+function rotateImage(imgEl, dialValue) {
+  imgEl.style.transform = 'rotate('+(dialValue*2)+'deg)';
+}
+
 
 </script>
 
