@@ -19,15 +19,15 @@ var Note = function () {
 
     this.OSC = AUDIO_CONTEXT.createOscillator();
 
-    this.HIGHPASS = AUDIO_CONTEXT.createBiquadFilter();
-    this.HIGHPASS.type = "highpass";
-    this.HIGHPASS.frequency.value = this.AMOUNT;
-    this.HIGHPASS.Q.value = 28;
+    // this.HIGHPASS = AUDIO_CONTEXT.createBiquadFilter();
+    // this.HIGHPASS.type = "lowpass";
+    // this.HIGHPASS.frequency.value = this.AMOUNT;
+    // this.HIGHPASS.Q.value = 28;
 
     this.GAIN = AUDIO_CONTEXT.createGain();
     
-    this.OSC.connect(this.HIGHPASS);
-    this.HIGHPASS.connect(this.GAIN);
+    this.OSC.connect(this.GAIN);
+    // this.HIGHPASS.connect(this.GAIN);
     this.GAIN.connect(AUDIO_CONTEXT.destination);
 
     // this.OSC.connect(this.GAIN);
@@ -67,7 +67,7 @@ function createOsc(audioContext, frequency, fxType, waveType) {
   
   // Create GainNode  
   var gain = audioContext.createGain(); // Create gain node
-  gain.gain.value = 0.5; // Set gain to full volume
+  gain.gain.value = 1; // Set gain to full volume
 
   // Create filter
   var fxFilter;
@@ -93,11 +93,13 @@ function createOsc(audioContext, frequency, fxType, waveType) {
   oscillator.connect(fxFilter); // Connect oscillator to gain
   fxFilter.connect(gain); // Connect gain to filter
   gain.connect(audioContext.destination);
-  return {osc: oscillator, fx: fxFilter};
+  return {osc: oscillator, fx: fxFilter, gain: gain};
 }
-function destroyOsc(oscillator) {
+function destroyOsc(oscillator, filter, gain) {
   oscillator.stop();
   oscillator.disconnect();
+  gain.disconnect();
+  filter.disconnect();
 }
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -205,6 +207,7 @@ function dial(dial, knob, active, visual) {
   });
   
   dial.addEventListener('touchmove', function(ev){
+    
       
     if(sPoint.q){
       dX = -(ev.touches[0].pageX - centerX);

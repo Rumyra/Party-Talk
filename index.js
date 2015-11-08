@@ -31,11 +31,6 @@ app.get('/miniMidi', function(req, res){
     res.render('miniMidi', req);
 });
 
-app.get('/blah', function(req,res) {
-    req.PUSH_KEY = process.env.PUSH_KEY;
-    res.render('blah', req);
-});
-
 // Pusher ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 var pusher = new Pusher({
   appId: process.env.PUSH_APPID,

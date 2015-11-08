@@ -1,0 +1,60 @@
+#link-join {padding: 5px 10px 0px; text-align: center;}
+#link-join a {color:white; font-family: sans-serif; text-decoration: none; font-size: 1.4em;}
+#link-join i {display: inline-block; margin: 0px 8px; width:16px; height:16px; border-radius:10px; background-color: rgb(255,148,10);}
+
+#avatarWall {
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#avatarWall img {
+  width:20vw; height:20vw;
+}
+
+#apiList p {display: inline-block; margin:20px;}
+
+/*VJING CSS~~~~~~~~~~~~~~~~~~*/
+#vjing {
+  border:1px solid purple;
+  position: absolute; top:0px; left:0px;
+  width:100vw; height:90vh;
+}
+#vjing > section {
+  position: absolute; top: 0px; left: 0px;
+  width:100vw; height:90vh;
+  overflow: hidden;
+}
+.screen-right {opacity:0;}
+#vjing > section div {
+  display:none;
+  position: absolute; top: 0px; left: 0px;
+  width:100vw; height:90vh;
+  text-align: center;
+}
+#vjing > button {position: absolute; top: 90vh;}
+
+#avatar-wall {
+  text-align: center;
+}
+#avatar-wall img {
+  display: inline-block;
+  margin:0px; padding:0px;
+  width:11%; height:15%;
+  box-sizing:border-box; border:2px solid white;
+  opacity:1;
+}
+
+.video video {width:100%; height:auto;}
+
+#abstract {
+  width: 100vw; height: 100vh;
+  background: black;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+}
+#abstract i {display:block; width:10vw; height:10vh;}
+
+
+
+
+

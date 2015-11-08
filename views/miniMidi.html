@@ -6,14 +6,14 @@
 
   <!--device/browser shizzle-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
   <!--meta content-->
   <link rel="shortcut icon" href="public/favicon.ico" />
   <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png" />
   <meta name="author" content="Ruth John (@rumyra)">
   <meta name="dcterms.rightsHolder" content="Ruth John for Rumyra Ltd, United Kingdom, 2015">
-  <link rel="stylesheet" href="css/miniMidi.css" id="theme">
+  <link rel="stylesheet" href="css/miniMidi.css" id="theme" />
   <title>Come to Rumyras party!</title>
   <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
   <script src="audioVisual.js"></script>
@@ -36,7 +36,7 @@
   </section>
 
   <section id="music-midi-control">
-    <button class="pad pad-active">MIDI PAD</button>
+    <button class="pad">MIDI PAD</button>
     <div class="dial">
       <div class="knob"></div>
       <div class="dial-active"></div>
@@ -57,7 +57,7 @@
 <script type="text/javascript">
 
   // dom vars
-  var inviteForm = document.getElementById('party-invite'),
+  var inviteDiv = document.getElementById('party-invite'),
     holdingDiv = document.getElementById('holding'),
 
     musicMidi = document.getElementById('music-midi-control'),
@@ -72,6 +72,9 @@
     visualKnob = visualMidi.getElementsByClassName('knob')[0],
     visualActive = visualMidi.getElementsByClassName('dial-active')[0];
 
+document.body.addEventListener("touchmove", function(ev) {
+  ev.preventDefault();
+});
   // establish connection with pusher
   var config = document.getElementById('pusher').dataset;
   var pusher = new Pusher(config.key, {encrypted:true});
@@ -98,7 +101,7 @@ function formStuff() {
   
   console.log(inviteForm);
 
-  if ( (inviteForm['git-name'].value == '') || (inviteForm['git-name'].value == 'octocat') ) {
+  if ( (inviteForm['git-name'].value == '') ) {
 
     var label = inviteForm.querySelector('label');
     label.className = 'label-warn';
@@ -111,7 +114,7 @@ function formStuff() {
     // send event
     getGitAvatar(username);
     // show hide form
-    inviteForm.style.display = 'none';
+    inviteDiv.style.display = 'none';
     holdingDiv.style.display = 'block';
 
   }
@@ -143,7 +146,7 @@ function getGitAvatar(username) {
 
 // audio stuff
 channel.bind('client-show_music', function(data) {
-  inviteForm.style.display = 'none';
+  inviteDiv.style.display = 'none';
   holdingDiv.style.display = 'none';
   musicMidi.style.display = 'block';
   dial(musicDial, musicKnob, musicActive);
@@ -157,10 +160,12 @@ var oscillator,
   waveType = oscillatorOpts.waveTypes[waveIndex],
   playing = false;
   console.log(freqIndex+'-'+fxIndex+'-'+waveIndex);
+
 musicPad.addEventListener('click', function(event) {
   if (playing) {
-    destroyOsc(oscillator.osc);
+    destroyOsc(oscillator.osc, oscillator.fx, oscillator.gain);
     playing = false;
+    musicPad.classList.remove('pad-active');
   } else {
     oscillator = createOsc(audioAPI, frequency, fxIndex, waveType);
     switch (fxIndex) {
@@ -175,6 +180,7 @@ musicPad.addEventListener('click', function(event) {
         break;
     }
     playing = true;
+    musicPad.classList.add('pad-active');
   }
 });
 
@@ -216,10 +222,16 @@ visualPad.addEventListener("click", function(ev) {
       "invert": inverted
     }
   );
+  if (inverted) {
+    visualPad.classList.add('pad-active');
+  } else {
+    visualPad.classList.remove('pad-active');
+  }
 });
+var sendRotate;
 visualDial.addEventListener('mousedown', function(ev) {
-  
-  var sendRotate = window.setInterval(function() {
+  console.log('mousedown');
+  sendRotate = window.setInterval(function() {
     console.log(dialVal);
     channel.trigger(
       'client-rotate',
@@ -228,14 +240,29 @@ visualDial.addEventListener('mousedown', function(ev) {
         "rotate": dialVal
       }
     );
-  }, 5000);
-
-  this.addEventListener('mouseup', function() {
-    window.clearInterval(sendRotate);
-  });
-
+  }, 500);
 });
-
+visualDial.addEventListener('mouseup', function() {
+  console.log('mouseup');
+  window.clearInterval(sendRotate);
+});
+visualDial.addEventListener('touchstart', function(ev) {
+  console.log('touchstart');
+  sendRotate = window.setInterval(function() {
+    console.log(dialVal);
+    channel.trigger(
+      'client-rotate',
+      {
+        "userId": username,
+        "rotate": dialVal
+      }
+    );
+  }, 100);
+});
+visualDial.addEventListener('touchend', function() {
+  console.log('touchend');
+  window.clearInterval(sendRotate);
+});
 
 </script>
 

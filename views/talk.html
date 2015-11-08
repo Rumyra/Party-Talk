@@ -20,33 +20,19 @@
   <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="theme">
   <script src="bower_components/reveal.js/js/reveal.js"></script>
 
-  <!-- <link href="css/styles.css" rel="stylesheet" type="text/css"> -->
+  <link href="css/extraTalk.css" rel="stylesheet" type="text/css">
   <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
-  <style type="text/css">
-  #link-join {padding: 5px 10px 0px; text-align: center;}
-  #link-join a {color:white; font-family: sans-serif; text-decoration: none; font-size: 1.4em;}
-  #link-join i {display: inline-block; margin: 0px 8px; width:16px; height:16px; border-radius:10px; background-color: rgb(255,148,10);}
-
-  #avatarWall {
-    display: -webkit-flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  #avatarWall img {
-    width:15vw; height:15vw;
-  }
-
-  </style>
+  
 </head>
 <body class="talk">
   <div id="link-join">
-    <p><a href="">Somebitly.here</a></p>
+    <p><a href="http://bit.ly/1H8N7wj">http://bit.ly/1H8N7wj</a></p>
   </div>
   <div class="reveal">
     <div class="slides"><section>
         <section>
           <h2>@rumyra</h2>
-          <p class="fragment fade-in">http://somebitlyhere</p>
+          <p class="fragment fade-in">http://bit.ly/1H8N7wj</p>
           <aside class="notes">
             <p>Hi everyone, due to where we are - I used to live 5 minutes down the road & come here for club nights quite a bit - and due to the fact i'm doing the last but one talk of the day, I thought I might try & start the party a bit early.</p>
             <p>And in a browser</p>
@@ -172,7 +158,7 @@ function onMIDISuccess(midiControl) {
             <p>Now just like we used the Audio API to create sound, we can use the animation API to create animations, to be controlled via MIDI.</p>
           </aside>
         </section>
-        <section>
+        <section data-state="buildWall">
           <h2>Web Animation API</h2>
           <p class="fragment fade-in">CSS Animations, CSS Transitions & SVG Animations.</p>
           <p class="fragment fade-in">Separates Animation Model and Timing Model.</p>
@@ -184,20 +170,6 @@ function onMIDISuccess(midiControl) {
         </section>
 
         <section data-state="visualMidiDemo">
-          <div id="avatarWall">
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" id="rumyra" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-            <img src="https://avatars2.githubusercontent.com/u/302715?v=3&s=460" />
-          </div>
           <aside class="notes">
             <p>Now, if you look at your browsers again the miniMidi is back, but this time we're gonna control the visuals.</p>
             <p>If you press the PAD your avatar should invert and if you turn the dial you should loop through the hue value</p>
@@ -212,7 +184,7 @@ function onMIDISuccess(midiControl) {
             <p></p>
           </aside>
         </section> -->
-        <section>
+        <section data-state="backToTalk">
           <h2>JAVASCRIPT!</h2>
           <p class="fragment fade-in">Has just made a room full of musicians and visual artists!</p>
           <aside class="notes">
@@ -222,8 +194,29 @@ function onMIDISuccess(midiControl) {
         <section>
           <h2>Browser APIs</h2>
           <div id="apiList" class="fragment fade-in">
-            <p></p>
-            <p></p>
+            <p>Geolocation</p>
+            <p>Web Animation</p>
+            <p>Web Audio</p>
+            <p>Ambient Light</p>
+            <p>Media Stream</p>
+            <p>Device Orientation</p>
+            <p>Screen Orientation</p>
+            <p>Web MIDI</p>
+            <p>Proximity</p>
+            <p>Battery Status</p>
+            <p>Push Notifications</p>
+            <p>Network Information</p>
+            <p>File System</p>
+            <p>Clipboard</p>
+            <p>Full Screen</p>
+            <p>Page Visibility</p>
+            <p>Web Speech</p>
+            <p>Gamepad</p>
+            <p>Pointer Lock</p>
+            <p>Alarm</p>
+            <p>Vibration</p>
+            <p>Bluetooth</p>
+            <p>NFC</p>
           </div>
           <aside class="notes">
             <p>There are a load of cool new browser apis - here a list of just some of them - and I know you may not get a chance in your every work to use them in the same way we just all have</p>
@@ -259,6 +252,30 @@ function onMIDISuccess(midiControl) {
     </section></div>
   </div>
 
+  <div id="vjing">
+    <section class="screen-left">
+      <div id="avatar-wall"></div>
+      <div class="random"><img src="" /></div>
+      <div class="video">
+        <video id="video-one" autoplay loop>
+          <source src="video/remy.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="chris"><img src="" id="codepo8" /></div>
+    </section>
+    <section class="screen-right">
+      <div class="random"><img src="" /></div>
+      <div class="video">
+        <video id="video-two" autoplay loop>
+          <source src="video/he-man.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div id="abstract"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </section>
+    <button id="play-audio">play</button>
+    <audio id="simon" src="Guilt.mp3" loop></audio>
+  </div>
+
 <div id="pusher" data-key="{{PUSH_KEY}}"></div>
 <script src="bower_components/reveal.js/plugin/notes/notes.js"></script>
 <script src="bower_components/reveal.js/plugin/highlight/highlight.js"></script>
@@ -268,7 +285,22 @@ function onMIDISuccess(midiControl) {
 <script type="text/javascript">
 
   var linkJoin = document.getElementById('link-join'),
-    allVids = document.getElementsByTagName('video');
+    allVids = document.getElementsByTagName('video'),
+    vjDiv = document.getElementById('vjing'),
+    avatarWall = document.getElementById('avatar-wall'),
+    playButton = document.getElementById('play-audio'),
+    simonSoundEl = document.getElementById('simon'),
+    leftScreen = document.getElementsByClassName('screen-left')[0],
+    rightScreen = document.getElementsByClassName('screen-right')[0],
+    leftRand = leftScreen.getElementsByClassName('random')[0],
+    rightRand = rightScreen.getElementsByClassName('random')[0],
+    threshold = 0,
+    set = 'pics',
+
+    audioAPI = new AudioContext,
+    guiltMp3 = audioAPI.createMediaElementSource(simonSoundEl),
+    analyserNode = audioAPI.createAnalyser(),
+    frequencyData = new Uint8Array(1024);
 
   // establish connection with pusher
   var config = document.getElementById('pusher').dataset;
@@ -306,16 +338,31 @@ function onMIDISuccess(midiControl) {
 
   // event binding~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // user accepts invite
-  var allUsers = [], userData = {};
+  var allUsers = [], userData = {}, octocatNum = 0, allNames = [];
+  var octocats = ['daftpunktocat-guy.gif','daftpunktocat-thomas.gif','femalecoder.png','front-end-conftocat.png','ironcat.jpg','murakamicat.png','plumber.jpg','spidertocat.png','spocktocat.png','twenty-percent.png','xtocat.jpg'];
+
   channel.bind('client-register_user', function(data) {
     // userData.name = data.userId;
     // userData.image = data.userAvatar;
     // allUsers.push(userData);
-    allUsers.push({'name': data.userId, 'image': data.userAvatar});
+    if (data.userId === 'octocat') {
+      var octocatImgSrc = 'images/octocat/'+octocats[(octocatNum<11 ? octocatNum : (octocatNum-11))];
+      allUsers.push({'name': 'octocat'+octocatNum, 'image': octocatImgSrc});
+      octocatNum++; 
+    } else if (!include(allNames,data.userId)) {
+      allUsers.push({'name': data.userId, 'image': data.userAvatar});
+      allNames.push(data.userId);
+    }
     var iEl = document.createElement("i");
     linkJoin.getElementsByTagName('p')[0].appendChild(iEl);
     console.log(allUsers);
   });
+
+  function include(arr,obj) {
+    return (arr.indexOf(obj) != -1);
+  }
+
+  
 
   // create pics of everyone
   function buildAvatarWall() {
@@ -323,7 +370,7 @@ function onMIDISuccess(midiControl) {
     for (i=0; i<allUsers.length; i++) {
       allImages += '<img src="'+allUsers[i].image+'" id="'+allUsers[i].name+'" />'
     }
-    document.getElementById('avatarWall').innerHTML = allImages;
+    avatarWall.innerHTML = allImages;
   }
 
   // Reveal~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -384,8 +431,13 @@ Reveal.initialize({
     );
   }, false );
 
-  Reveal.addEventListener( 'visualMidiDemo', function() {
+  Reveal.addEventListener( 'buildWall', function() {
     buildAvatarWall();
+    linkJoin.style.display = "none";
+  }, false );
+
+  Reveal.addEventListener( 'visualMidiDemo', function() {
+    vjDiv.style.display = 'block';
     channel.trigger(
       'client-show_visual',
       {
@@ -393,6 +445,10 @@ Reveal.initialize({
       }
     );
     
+  }, false );
+
+  Reveal.addEventListener('backToTalk', function() {
+    vjDiv.style.display = 'none';
   }, false );
 
 channel.bind('client-invert', function(data) {
@@ -418,6 +474,30 @@ function revertImage(imgEl) {
 function rotateImage(imgEl, dialValue) {
   imgEl.style.transform = 'rotate('+(dialValue*2)+'deg)';
 }
+
+//VJING
+analyserNode.fftSize = 2048;
+
+var playGuilt = function playGuilt() {
+  guiltMp3.connect(analyserNode);
+  guiltMp3.connect(audioAPI.destination);
+  analyserNode.connect(audioAPI.destination);
+  simonSoundEl.play();
+  flashImages();
+  animateLights();
+  // flashLights();
+  // sizeCircles();
+  // crazedCircles();
+  mixScreens();
+}
+playButton.onclick = function() {
+  if (simonSoundEl.paused) {
+    playGuilt();
+  } else {
+    simonSoundEl.pause();
+  }
+}
+
 
 
 </script>
