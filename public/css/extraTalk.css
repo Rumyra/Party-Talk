@@ -1,23 +1,14 @@
-#link-join {padding: 5px 10px 0px; text-align: center;}
+#link-join {padding: 5px 10px 0px; text-align: center; position:absolute; top:4px; left:0px; width:100%;}
 #link-join a {color:white; font-family: sans-serif; text-decoration: none; font-size: 1.4em;}
 #link-join i {display: inline-block; margin: 0px 8px; width:16px; height:16px; border-radius:10px; background-color: rgb(255,148,10);}
-
-#avatarWall {
-  display: -webkit-flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-#avatarWall img {
-  width:20vw; height:20vw;
-}
 
 #apiList p {display: inline-block; margin:20px;}
 
 /*VJING CSS~~~~~~~~~~~~~~~~~~*/
 #vjing {
-  border:1px solid purple;
   position: absolute; top:0px; left:0px;
   width:100vw; height:90vh;
+  display:none;
 }
 #vjing > section {
   position: absolute; top: 0px; left: 0px;
@@ -33,14 +24,16 @@
 }
 #vjing > button {position: absolute; top: 90vh;}
 
-#avatar-wall {
+#vjing > section #avatar-wall {
   text-align: center;
+  display:block;
 }
 #avatar-wall img {
   display: inline-block;
   margin:0px; padding:0px;
   width:11%; height:15%;
   box-sizing:border-box; border:2px solid white;
+  background-image: url('../images/octocat/daftpunktocat-thomas.gif');
   opacity:1;
 }
 

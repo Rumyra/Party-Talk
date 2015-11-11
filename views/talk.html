@@ -34,10 +34,10 @@
           <h2>@rumyra</h2>
           <p class="fragment fade-in">http://bit.ly/1H8N7wj</p>
           <aside class="notes">
-            <p>Hi everyone, due to where we are - I used to live 5 minutes down the road & come here for club nights quite a bit - and due to the fact i'm doing the last but one talk of the day, I thought I might try & start the party a bit early.</p>
+            <p>Hi everyone, I'm rumyra<br />Not doing talk - WHERE I used to live 5 minutes down the road & come here for club nights quite a bit - penultimate talk of the day, I thought I might try & start the party a bit early.</p>
             <p>And in a browser</p>
             <p>Thing is, I'd rather not party by myself, so you're all invited - but you *do* need a github account</p>
-            <p>So go to that url, and enter your github username to accept my invite, to hopefully what will be, our browser party, you'll see dots appearing at the top of the talk - that's you. Please don't close your browser, you're gonna need it open later.</p>
+            <p>So go to that url, and enter your github username or octocat to accept my invite - you'll see dots appearing at the top of the talk - that's you. Please don't close your browser, you're gonna need it open later.</p>
             <p>Whilst you do that, I'm gonna take 5 minutes to talk to you about something completely different.</p>
           </aside>
         </section>
@@ -49,8 +49,8 @@
             <p class="fragment fade-in">Control signals = volume, panning, cues & clock signals</p>
           <aside class="notes">
             <p>MIDI - I know what you're thinking, we may be side tracking a little from JS, but bear with me.</p>
-            <p>MIDI - Musical Instrument Digital Interface. A protocol standardised in 1983 by a panel of music industry representatives - imagine that, a standardised format, decided by industry experts! (Maintained by MIDI Manufacturers Associations/MMA)</p>
-            <p>Rise of digital/electronic instruments in the late 70's</p>
+            <p>MIDI - Musical Instrument Digital Interface. A protocol standardised in 1983 by a panel of music industry representatives ★ - imagine that, a standardised format, decided by industry experts! (Maintained by MIDI Manufacturers Associations/MMA)</p>
+            <p>★ Rise of digital/electronic instruments in the late 70's</p>
             <p>NOT audio itself, its data protocols to control that audio. Most common events carry data to specify notation, pitch & velocity, but also encorporates signals for volume, vinbrato, panning, cues & clock signals (that are used to sync tempo)</p>
             <p>I get this doesn't mean too much right now, so let's put this practically - little bit of context</p>
           </aside>
@@ -86,29 +86,39 @@ function onMIDISuccess(midiControl) {
           <p class="fragment fade-in">[144, 5, 64]</p>
           <aside class="notes">
             <p>Looks a little like this.</p>
+            <p>Logging data from inputs - pads, dials, sliders</p>
+            <p>Notation, pitch, velocity</p>
             <p>Data you receive from a device looks like this</p>
           </aside>
         </section>
-        <section data-state="audioDemo">
+        <section>
           <h2>Web MIDI API</h2>
-          <p class="fragment fade-in">Currently only supported by Chrome & Opera</p>
+          <p>Currently only supported by Chrome & Opera</p>
           <p class="fragment fade-in">Use with the Web Audio API</p>
           <p class="fragment fade-in">Need a MIDI controller:</p>
           <p class="fragment fade-in">AKAI LPD8</p>
           <aside class="notes">
             <p>It's only supported in Chrome & Opera and in working draft status with W3C. It's cool that we have it & we can play.</p>
-            <p>But it's suddenly becoming more relevant. I've noticed we have a few people have accepted my invite to the party - and what does a party need?</p>
-            <p>You got it - music!</p>
             <p>So this is the most common use for the MIDI protocol, to use with digital audio to create sounds.</p>
             <p>You need a MIDI controller</p>
-            <p>I have the AKAI LPD8 with me.</p>
+            <p>I made a video of a demo. I have an AKAI LPD8 - hooked it up to the audio api.</p>
           </aside>
         </section>
-        <section>
-          <video></video>
+        <section data-state="playVid">
+          <video src="video/akai.mp4" controls id="akai"></video>
           <aside class="notes">
             <p>So what I've done with this, is allocate occilated sounds, created with the audio api, to the synth pads on the controller. So I press them and I make sounds. They're pressure sensitive, so the harder I press the louder the sounds.</p>
             <p>I've also allocated some distortion to the dials, so when I play the sounds I can alter them</p>
+            <p>I'm not an amazing musician - I can hold a beat, but I'm not amazing, I could use some help</p>
+            <p>The other thing I was considering was does MIDI have to be hardware, considering it's just a data protocol, can we emulate that with software.</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Party checklist</h2>
+          <ul>
+            <li>Music</li>
+          </ul>
+          <aside class="notes">
             <p>I'm not an amazing musician - I can hold a beat, but I'm not amazing, I could use some help</p>
             <p>The other thing I was considering was does MIDI have to be hardware, considering it's just a data protocol, can we emulate that with software.</p>
           </aside>
@@ -127,7 +137,7 @@ function onMIDISuccess(midiControl) {
             <p></p>
           </aside>
         </section>
-        <section>
+        <section data-state="stopAudio">
           <h2>Party checklist</h2>
           <ul>
             <li class="fragment fade-in">✓  Music</li>
@@ -143,7 +153,8 @@ function onMIDISuccess(midiControl) {
           <p class="fragment fade-in">Extension of MIDI, using entertainment equipment to use the same protocol.</p>
           <p class="fragment fade-in">Think lighting desks, fireworks, fountains...</p>
           <aside class="notes">
-            <p>MSC enables all types of entertanment equipment to communicate using MIDI, basically. The MMA approved this in 1991. So we're talking lighting desks, other stage controls. Firework displays. The fountains outside big hotels in Las Vegas - controlled by MIDI.</p>
+            <p>MIDI is a cool data protocol - so what started happening is it started being used for more than just digital audio - other entertainment equip</p>
+            <p>MSC enables ★ all types of equipment to communicate using MIDI, basically. The MMA approved this in 1991. So we're talking lighting desks, other stage controls. Firework displays. The fountains outside big hotels in Las Vegas - controlled by MIDI.</p>
             <p>So although this version of the protocol is made up of events such as go, stop, resume, load, fire, standby - it's actually still just MIDI data and thus you can use any of the MIDI controllers we saw earlier.</p>
             <p>So I would quite like some sort of visual show at my party</p>
           </aside>
@@ -169,6 +180,17 @@ function onMIDISuccess(midiControl) {
           </aside>
         </section>
 
+        <section>
+<pre><code data-trim>octocat.animate([
+  {transform: 'rotate(0deg)'},
+  {transform: 'rotate(180deg)'}
+], {
+    duration: 200,
+    iterations: 1
+});
+          </code></pre>
+        </section>
+
         <section data-state="visualMidiDemo">
           <aside class="notes">
             <p>Now, if you look at your browsers again the miniMidi is back, but this time we're gonna control the visuals.</p>
@@ -178,12 +200,22 @@ function onMIDISuccess(midiControl) {
             <p>Over view of software - it has two screens, picks up on music which generates visuals or animates those on screen, but also dictates the 'mixing' point so as I cross fade using the decks it should mix avatars</p>
           </aside>
         </section>
-        <!-- <section>
-          <h2>VJing</h2>
+
+        <section data-state="backToTalk">
+          <img src="images/idj.jpg" />
           <aside class="notes">
-            <p></p>
+            <p>So time to drink yet? Nope still not time to drink unfortunetely</p>
+            <p>I have a MIDI controller with me - it's this one - ICON iDJ. The reason I bought this is because I wanted to write a piece of software which allowed me to mix visuals in real time - in a browser</p>
+            <p>So I did this</p>
+            <p>I just wanted to show you a picture because you won't see what I'm doing...</p>
+            <p>Software has two screens - allocated to each side of the controller - cross fader in the middle is used to mix</p>
+            <p>Let's put everything we've learnt together</p>
+            <p>Music u played is amazing - but we should probably get some club music up in this place</p>
           </aside>
-        </section> -->
+        </section>
+
+        <section data-state="visualMidiDemo"></section>
+
         <section data-state="backToTalk">
           <h2>JAVASCRIPT!</h2>
           <p class="fragment fade-in">Has just made a room full of musicians and visual artists!</p>
@@ -231,7 +263,7 @@ function onMIDISuccess(midiControl) {
             <p>I know some of this stuff maybe way in the future, but we should be keeping our ear to the ground with it. Who knows what you might discover. In the theme of a recent OxfordJS meetup - javascript is everywhere.</p>
           </aside>
         </section>
-        <section>
+        <section data-state="endTalk">
           <h2>Thank you for coming to my party</h2>
           <h2>@rumyra</h2>
           <aside class="notes">
@@ -241,12 +273,9 @@ function onMIDISuccess(midiControl) {
 
         <section>
           <h2>Credits</h2>
-          <p><a href="">Play note MIDI edited from Dave Mackitosh's codepen</a></p>
-          <p><a href=""></a></p>
-          <p><a href=""></a></p>
-          <p><a href=""></a></p>
+          <p><a href="http://codepen.io/Rumyra/pen/zvMeqb?editors=001">MIDI demo by Rumyra on Codepen</a></p>
           <p><a href="https://www.youtube.com/watch?v=B-UsdgZfiTQ">Drum track</a></p>
-          <p><a href="http://codepen.io/jmichaliga/pen/lFGza?editors=001">Dial codepen by Justin Michaliga</a></p>
+          <p><a href="http://codepen.io/jmichaliga/pen/lFGza?editors=001">Dial hacked from a codepen by Justin Michaliga</a></p>
         </section>
 
     </section></div>
@@ -261,7 +290,7 @@ function onMIDISuccess(midiControl) {
           <source src="video/remy.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="chris"><img src="" id="codepo8" /></div>
+      <div class="chris"><img src="images/codepo8_400x400.png" id="codepo8" /></div>
     </section>
     <section class="screen-right">
       <div class="random"><img src="" /></div>
@@ -323,46 +352,23 @@ function onMIDISuccess(midiControl) {
     console.log(data.midi_data);
   });
 
-  //get a reference to the element
-  // var sendToMidiBut = document.getElementById('invite-accept');
-
-  //add event listener
-  // sendToMidiBut.addEventListener('click', function(event) {
-  //   channel.bind(
-  //     'send_to_midi',
-  //     {
-  //       "midi_data": [144, 48, 127]
-  //     }
-  //   );
-  // });
-
+  
   // event binding~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // user accepts invite
   var allUsers = [], userData = {}, octocatNum = 0, allNames = [];
-  var octocats = ['daftpunktocat-guy.gif','daftpunktocat-thomas.gif','femalecoder.png','front-end-conftocat.png','ironcat.jpg','murakamicat.png','plumber.jpg','spidertocat.png','spocktocat.png','twenty-percent.png','xtocat.jpg'];
 
   channel.bind('client-register_user', function(data) {
-    // userData.name = data.userId;
-    // userData.image = data.userAvatar;
-    // allUsers.push(userData);
-    if (data.userId === 'octocat') {
-      var octocatImgSrc = 'images/octocat/'+octocats[(octocatNum<11 ? octocatNum : (octocatNum-11))];
-      allUsers.push({'name': 'octocat'+octocatNum, 'image': octocatImgSrc});
-      octocatNum++; 
-    } else if (!include(allNames,data.userId)) {
+    if (!include(allNames,data.userId)) {
       allUsers.push({'name': data.userId, 'image': data.userAvatar});
       allNames.push(data.userId);
     }
     var iEl = document.createElement("i");
     linkJoin.getElementsByTagName('p')[0].appendChild(iEl);
-    console.log(allUsers);
   });
 
   function include(arr,obj) {
     return (arr.indexOf(obj) != -1);
   }
-
-  
 
   // create pics of everyone
   function buildAvatarWall() {
@@ -416,8 +422,8 @@ Reveal.initialize({
 
 });
 // stream video for audio demo
-  Reveal.addEventListener( 'audioDemo', function() {
-    showVideo(allVids[0]);
+  Reveal.addEventListener( 'playVid', function() {
+    document.getElementById('akai').play();
   }, false );
   
   Reveal.addEventListener( 'audioMidiDemo', function() {
@@ -430,6 +436,15 @@ Reveal.initialize({
       }
     );
   }, false );
+
+  Reveal.addEventListener( 'stopAudio', function() {
+    channel.trigger(
+      'client-stop_music',
+      {
+        "stopMusic": true
+      }
+    );
+  }, false);
 
   Reveal.addEventListener( 'buildWall', function() {
     buildAvatarWall();
@@ -449,6 +464,15 @@ Reveal.initialize({
 
   Reveal.addEventListener('backToTalk', function() {
     vjDiv.style.display = 'none';
+  }, false );
+
+  Reveal.addEventListener('endTalk', function() {
+    channel.trigger(
+      'client-end_talk',
+      {
+        "end_talk": true
+      }
+    );
   }, false );
 
 channel.bind('client-invert', function(data) {

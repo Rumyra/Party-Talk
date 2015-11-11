@@ -24,7 +24,7 @@
   <section id="party-invite">
     <h2>You've been invited to Ruth's Party!</h2>
     <form method="post" action="/">
-      <label for="git-name">Please enter your github username to accept the invite:</label>
+      <label for="git-name">Please enter your github username (or just <i>octocat</i>) to accept the invite:</label>
       <input type="text" name="git-name" id="git-name" placeholder="octocat" />
       <input type="submit" value="Join The Party" />
     </form>
@@ -91,11 +91,13 @@ document.body.addEventListener("touchmove", function(ev) {
     console.log('subscription succeeded');
   });
 
-// CHECK ALL STUFF ABOVE THIS POINT - PROBS NOT NEEDED
 // Form stuff ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-var username = '';
-var avatar = '';
+  
+
+// var username = '';
+// var avatar = '';
 var inviteForm = document.forms[0];
+var octocats = ['daftpunktocat-guy.gif','daftpunktocat-thomas.gif','femalecoder.png','front-end-conftocat.png','ironcat.jpg','murakamicat.png','plumber.jpg','spidertocat.png','spocktocat.png','twenty-percent.png','xtocat.jpg'];
 
 function formStuff() {
   
@@ -109,14 +111,22 @@ function formStuff() {
   } else {
 
     // grab username
-    cleanString = inviteForm['git-name'].value.replace(/[^a-zA-Z0-9\s]/g, '').replace(/^\s+|\s+$/, '').replace(/\s+/g, '').toLowerCase();
+    cleanString = inviteForm['git-name'].value.replace(/[^a-zA-Z0-9-\s]/g, '').replace(/\s+/g, '').toLowerCase();
     username = cleanString;
     // send event
-    getGitAvatar(username);
+    if (username === 'octocat') {
+      var octoId = getRandomInt(1,999);
+      username = username+octoId;
+      avatar = 'images/octocat/'+octocats[octoId%11];
+      sendUser(username, avatar);
+    } else {
+      getGitAvatar(username);  
+    }
     // show hide form
     inviteDiv.style.display = 'none';
     holdingDiv.style.display = 'block';
-
+    localStorage.setItem('page', '2');
+    localStorage.setItem('name',username);
   }
 }
 inviteForm.addEventListener("submit", function(ev) {
@@ -130,18 +140,30 @@ function getGitAvatar(username) {
     var responseObj = JSON.parse(this.responseText);
     // console.log(responseObj.avatar_url);
     avatar = responseObj.avatar_url;
-    channel.trigger(
-      'client-register_user',
-      {
-        "userId": username,
-        "userAvatar": avatar
-      }
-    );
+    sendUser(username, avatar);
+    // channel.trigger(
+    //   'client-register_user',
+    //   {
+    //     "userId": username,
+    //     "userAvatar": avatar
+    //   }
+    // );
+    localStorage.setItem('pic',avatar);
   }
   var request = new XMLHttpRequest();
   request.onload = getPicUrl;
   request.open('get', 'https://api.github.com/users/'+username, true)
   request.send()
+}
+
+function sendUser(name, pic) {
+  channel.trigger(
+    'client-register_user',
+    {
+      "userId": name,
+      "userAvatar": pic
+    }
+  );
 }
 
 // audio stuff
@@ -150,6 +172,7 @@ channel.bind('client-show_music', function(data) {
   holdingDiv.style.display = 'none';
   musicMidi.style.display = 'block';
   dial(musicDial, musicKnob, musicActive);
+  localStorage.setItem('page','3');
 });
 var audioAPI = new (window.AudioContext || window.webkitAudioContext)();
 var oscillator,
@@ -182,7 +205,11 @@ musicPad.addEventListener('click', function(event) {
     playing = true;
     musicPad.classList.add('pad-active');
   }
+  channel.bind('client-stop_music', function(data) {
+    oscillator.gain.gain.value = 0;
+  });
 });
+
 
 function updateFxOne() {
   requestAnimationFrame(updateFxOne);
@@ -201,11 +228,14 @@ function updateFxThree() {
 // Visual demo
 channel.bind('client-show_visual', function(data) {
   console.log(data);
+  inviteDiv.style.display = 'none';
+  holdingDiv.style.display = 'none';
   musicMidi.style.display = 'none';
   visualMidi.style.display = 'block';
   document.getElementsByTagName('body')[0].className = 'midi-light';
   dialVal = 0;
   dial(visualDial, visualKnob, visualActive, true);
+  localStorage.setItem('page','4');
 });
 // press button send invert event
 var visualMidi = document.getElementById('visual-midi-control');
@@ -240,7 +270,7 @@ visualDial.addEventListener('mousedown', function(ev) {
         "rotate": dialVal
       }
     );
-  }, 500);
+  }, 300);
 });
 visualDial.addEventListener('mouseup', function() {
   console.log('mouseup');
@@ -257,13 +287,40 @@ visualDial.addEventListener('touchstart', function(ev) {
         "rotate": dialVal
       }
     );
-  }, 100);
+  }, 300);
 });
 visualDial.addEventListener('touchend', function() {
   console.log('touchend');
   window.clearInterval(sendRotate);
 });
 
+
+// if localstore is set show appropriate page
+  if (localStorage.getItem('page') === '2') {
+    inviteDiv.style.display = 'none';
+    holdingDiv.style.display = 'block';
+  } else if (localStorage.getItem('page') === '3') {
+    inviteDiv.style.display = 'none';
+    holdingDiv.style.display = 'none';
+    musicMidi.style.display = 'block';
+  } else if (localStorage.getItem('page') === '4') {
+
+  }
+  // set username and avatar
+  if (localStorage.getItem('name')) {
+    var username = localStorage.getItem('name');
+  } else {
+    var username = '';
+  }
+  if (localStorage.getItem('pic')) {
+    var avatar = localStorage.getItem('pic');
+  } else {
+    var avatar = '';
+  }
+
+  channel.bind('client-end_talk', function(data) {
+    localStorage.clear();
+  });
 </script>
 
 </body>

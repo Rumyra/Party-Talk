@@ -3,55 +3,6 @@
 1. Audio notes
 2.
 */
-
-//1. Audio notes Taken inspiration from Dave Mackintosh (way neater than mine :) )
-var AUDIO_CONTEXT = new (window.AudioContext || window.webkitAudioContext)();
-
-var effectAmount = 60;
-
-var Note = function () {
-
-  function Note(note, velocity) {
-    this.NOTE = note;
-    this.VELOCITY = velocity / 127;
-    this.AMOUNT = effectAmount*100;
-    // this.AMOUNT = 6000;
-
-    this.OSC = AUDIO_CONTEXT.createOscillator();
-
-    // this.HIGHPASS = AUDIO_CONTEXT.createBiquadFilter();
-    // this.HIGHPASS.type = "lowpass";
-    // this.HIGHPASS.frequency.value = this.AMOUNT;
-    // this.HIGHPASS.Q.value = 28;
-
-    this.GAIN = AUDIO_CONTEXT.createGain();
-    
-    this.OSC.connect(this.GAIN);
-    // this.HIGHPASS.connect(this.GAIN);
-    this.GAIN.connect(AUDIO_CONTEXT.destination);
-
-    // this.OSC.connect(this.GAIN);
-    // this.GAIN.connect(AUDIO_CONTEXT.destination);
-
-    console.log('NOTE %s @ %s', this.NOTE, this.VELOCITY);
-    this.GAIN.gain.value = this.VELOCITY;
-    this.OSC.type = 'sine';
-    this.OSC.frequency.value = this.NOTE;
-  }
-  Note.prototype.play = function play() {
-    this.OSC.start(0);
-  };
-  Note.prototype.stop = function stop() {
-    this.OSC.stop(0);
-  };
-  Note.prototype.osc = this.OSC;
-  Note.prototype.effect = 1;
-  return Note;
-
-}();
-
-
-
 var oscillatorOpts = {
   frequencies: [196, 220, 261.63, 329.63, 392, 440],
   waveTypes: ["sine", "square", "triangle"]

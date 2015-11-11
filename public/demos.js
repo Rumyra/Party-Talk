@@ -576,17 +576,17 @@ var mixScreens = function mixScreens() {
 
 //2. STREAMING VID~~~~~~~~~~~~~~~~~~~~
 // stream video of me playing
-function showVideo(vidEl) {
-  var vid = navigator.mediaDevices.getUserMedia({ audio: false, video: true });
-  vid.then(function(mediaStream) {
-    vidEl.src = window.URL.createObjectURL(mediaStream);
-    vidEl.onloadedmetadata = function(e) {
-      vidEl.play();
-    };
-  });
+// function showVideo(vidEl) {
+//   var vid = navigator.mediaDevices.getUserMedia({ audio: false, video: true });
+//   vid.then(function(mediaStream) {
+//     vidEl.src = window.URL.createObjectURL(mediaStream);
+//     vidEl.onloadedmetadata = function(e) {
+//       vidEl.play();
+//     };
+//   });
 
-  vid.catch(function(e) { console.log(e.name); });
-}
+//   vid.catch(function(e) { console.log(e.name); });
+// }
 
 // VJ STUFF
 
