@@ -20,6 +20,7 @@
   display:none;
   position: absolute; top: 0px; left: 0px;
   width:100vw; height:90vh;
+  background-color: black;
   text-align: center;
 }
 #vjing > button {position: absolute; top: 90vh;}

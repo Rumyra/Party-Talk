@@ -44,7 +44,7 @@ function animateLights() {
     allRepeatedEls[i].style.borderColor = 'hsla('+lightColour+',  80%, 50%, 1)';
     // flash on frequency
     var freqDataKey = i*2;
-    if (frequencyData[freqDataKey] > 100){
+    if (frequencyData[freqDataKey] > 140){
       // frequency played - make opache
       allRepeatedEls[i].style.opacity = "1";
     } else {
@@ -327,6 +327,8 @@ function onMIDIMessage(message) {
     if ( (data[0] === iDJcontrols.left.midButs.topLeft.onPress[0]) && (data[1] === iDJcontrols.left.midButs.topLeft.onPress[1]) ) {
 
       document.getElementsByClassName('chris')[0].style.display = 'none';
+      leftRand.style.display = 'none';
+      leftScreen.getElementsByClassName('video')[0].style.display = 'none';
       avatarWall.style.display = 'block';
 
       set = 'pics';
@@ -356,18 +358,16 @@ function onMIDIMessage(message) {
     // if top right middle buttons show cartoons
     if ( (data[0] === iDJcontrols.right.midButs.topLeft.onPress[0]) && (data[1] === iDJcontrols.right.midButs.topLeft.onPress[1]) ) {
 
-      showVideo(rightVidEl, rightCssEl);
-      set = 'cartoons';
-
     }
     // if top right right middle buttons show random
     if ( (data[0] === iDJcontrols.right.midButs.topRight.onPress[0]) && (data[1] === iDJcontrols.right.midButs.topRight.onPress[1]) ) {
 
       rightRand.style.display = 'block';
+      rightScreen.getElementsByClassName('video')[0].style.display = 'none';
       document.getElementById('abstract').style.display = 'none';
       set = 'random';
     }
-    // if bot right left middle buttons show random
+    // if bot right left middle buttons show 80s video
     if ( (data[0] === iDJcontrols.right.midButs.botLeft.onPress[0]) && (data[1] === iDJcontrols.right.midButs.botLeft.onPress[1]) ) {
 
       rightRand.style.display = 'none';
@@ -424,85 +424,85 @@ function onMIDIMessage(message) {
     // ADD TOP - STRING EFFECTS - ABSTRACT ALTS
     // effects for left screen
     // hue on bal
-    if ( (data[0] === iDJcontrols.left.bal.dial[0]) && (data[1] === iDJcontrols.left.bal.dial[1]) ) {
-      var degreeVal;
-      if (data[2] > 64) {
-        degreeVal = (data[2]-64)*3;
-      } else {
-        degreeVal = itsJustMaths(data[2], 180);
-      }
-      videoElOne.style.webkitFilter = "hue-rotate("+degreeVal+"deg)";
-    }
+    // if ( (data[0] === iDJcontrols.left.bal.dial[0]) && (data[1] === iDJcontrols.left.bal.dial[1]) ) {
+    //   var degreeVal;
+    //   if (data[2] > 64) {
+    //     degreeVal = (data[2]-64)*3;
+    //   } else {
+    //     degreeVal = itsJustMaths(data[2], 180);
+    //   }
+    //   videoElOne.style.webkitFilter = "hue-rotate("+degreeVal+"deg)";
+    // }
 
-    // brightness on hi
-    if ( (data[0] === iDJcontrols.left.hi.dial[0]) && (data[1] === iDJcontrols.left.hi.dial[1]) ) {
-      var brightVal;
-      if (data[2] > 64) {
-        brightVal = data[2]*1.6;
-      } else {
-        brightVal = data[2]+(data[2]/2);
-      }
-      videoElOne.style.webkitFilter = "brightness("+brightVal+"%)";
-    }
+    // // brightness on hi
+    // if ( (data[0] === iDJcontrols.left.hi.dial[0]) && (data[1] === iDJcontrols.left.hi.dial[1]) ) {
+    //   var brightVal;
+    //   if (data[2] > 64) {
+    //     brightVal = data[2]*1.6;
+    //   } else {
+    //     brightVal = data[2]+(data[2]/2);
+    //   }
+    //   videoElOne.style.webkitFilter = "brightness("+brightVal+"%)";
+    // }
 
-    // zoom on mid
-    if ( (data[0] === iDJcontrols.left.mid.dial[0]) && (data[1] === iDJcontrols.left.mid.dial[1]) ) {
-      var zoomVal;
-      if (data[2] > 64) {
-        zoomVal = ( (data[2]-64)*0.1 )+1;
-      } else {
-        zoomVal = (data[2]/64);
-      }
-      leftScreen.style.transform = 'scale('+zoomVal+')';
-    }
+    // // zoom on mid
+    // if ( (data[0] === iDJcontrols.left.mid.dial[0]) && (data[1] === iDJcontrols.left.mid.dial[1]) ) {
+    //   var zoomVal;
+    //   if (data[2] > 64) {
+    //     zoomVal = ( (data[2]-64)*0.1 )+1;
+    //   } else {
+    //     zoomVal = (data[2]/64);
+    //   }
+    //   leftScreen.style.transform = 'scale('+zoomVal+')';
+    // }
 
-    // contrast on low
-    if ( (data[0] === iDJcontrols.left.low.dial[0]) && (data[1] === iDJcontrols.left.low.dial[1]) ) {
-      var contrastVal;
-      if (data[2] > 64) {
-        contrastVal = data[2]*1.6;
-      } else {
-        contrastVal = data[2]+(data[2]/2);
-      }
-      videoElOne.style.webkitFilter = "contrast("+contrastVal+"%)";
-    }
+    // // contrast on low
+    // if ( (data[0] === iDJcontrols.left.low.dial[0]) && (data[1] === iDJcontrols.left.low.dial[1]) ) {
+    //   var contrastVal;
+    //   if (data[2] > 64) {
+    //     contrastVal = data[2]*1.6;
+    //   } else {
+    //     contrastVal = data[2]+(data[2]/2);
+    //   }
+    //   videoElOne.style.webkitFilter = "contrast("+contrastVal+"%)";
+    // }
 
-    // gray & saturate on gain
-    if ( (data[0] === iDJcontrols.left.gain.dial[0]) && (data[1] === iDJcontrols.left.gain.dial[1]) ) {
-      var satVal;
-      if (data[2] > 64) {
-        satVal = data[2]*1.6;
-      } else {
-        satVal = data[2]+(data[2]/2);
-      }
-      videoElOne.style.webkitFilter = "saturate("+satVal+"%)";
-    }
+    // // gray & saturate on gain
+    // if ( (data[0] === iDJcontrols.left.gain.dial[0]) && (data[1] === iDJcontrols.left.gain.dial[1]) ) {
+    //   var satVal;
+    //   if (data[2] > 64) {
+    //     satVal = data[2]*1.6;
+    //   } else {
+    //     satVal = data[2]+(data[2]/2);
+    //   }
+    //   videoElOne.style.webkitFilter = "saturate("+satVal+"%)";
+    // }
 
-    // invert & blur on top
-    if ( (data[0] === iDJcontrols.left.top.dial[0]) && (data[1] === iDJcontrols.left.top.dial[1]) ) {
-      var amountVal;
-      if (data[2] > 64) {
-        amountVal = ( (data[2]-63) );
-        videoElOne.style.webkitFilter = "blur("+amountVal+"px)";
-      } else {
-        amountVal = itsJustMaths(data[2], 100);
-        videoElOne.style.webkitFilter = "invert("+amountVal+"%)";
-      }
-    }
+    // // invert & blur on top
+    // if ( (data[0] === iDJcontrols.left.top.dial[0]) && (data[1] === iDJcontrols.left.top.dial[1]) ) {
+    //   var amountVal;
+    //   if (data[2] > 64) {
+    //     amountVal = ( (data[2]-63) );
+    //     videoElOne.style.webkitFilter = "blur("+amountVal+"px)";
+    //   } else {
+    //     amountVal = itsJustMaths(data[2], 100);
+    //     videoElOne.style.webkitFilter = "invert("+amountVal+"%)";
+    //   }
+    // }
 
 
 
-    // effects for right screen
-    //zoom on mid
-    if ( (data[0] === iDJcontrols.right.mid.dial[0]) && (data[1] === iDJcontrols.right.mid.dial[1]) ) {
-      var zoomVal;
-      if (data[2] > 64) {
-        zoomVal = ( (data[2]-64)*0.1 )+1;
-      } else {
-        zoomVal = (data[2]/64);
-      }
-      rightScreen.style.transform = 'scale('+zoomVal+')';
-    }
+    // // effects for right screen
+    // //zoom on mid
+    // if ( (data[0] === iDJcontrols.right.mid.dial[0]) && (data[1] === iDJcontrols.right.mid.dial[1]) ) {
+    //   var zoomVal;
+    //   if (data[2] > 64) {
+    //     zoomVal = ( (data[2]-64)*0.1 )+1;
+    //   } else {
+    //     zoomVal = (data[2]/64);
+    //   }
+    //   rightScreen.style.transform = 'scale('+zoomVal+')';
+    // }
 
     // dial for black & white
     // if ( (data[0] === 176) && (data[1] === 5) ) {
@@ -548,8 +548,8 @@ function onMIDIMessage(message) {
 // }
 
 function loadRandomAvatar(avatars, imgEl) {
-  var randIndex = getRandomInt(0, avatars.length);
-  imgEl.src = avatars[randIndex].userAvatar;
+  var randIndex = getRandomInt(0, (avatars.length-1));
+  imgEl.src = avatars[randIndex].image;
 }
 
 var changeVidSrc = function changeVidSrc(videoEl, newSrc) {
