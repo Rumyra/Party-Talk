@@ -79,7 +79,7 @@ document.body.addEventListener("touchmove", function(ev) {
   var config = document.getElementById('pusher').dataset;
   var pusher = new Pusher(config.key, {encrypted:true});
 
-  Pusher.channel_auth_endpoint = 'http://39367a56.ngrok.io/pusher/auth';
+  Pusher.channel_auth_endpoint = 'http://localhost:3000/pusher/auth';
   pusher.connection.bind('state_change', function(states) {
       console.log("Pusher's current state is " + states.current);
   });

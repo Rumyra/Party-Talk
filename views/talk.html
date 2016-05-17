@@ -26,13 +26,13 @@
 </head>
 <body class="talk">
   <div id="link-join">
-    <p><a href="http://bit.ly/1H8N7wj">http://bit.ly/1H8N7wj</a></p>
+    <p><a href="http://bit.ly/1H8N7wj">http://goo.gl/f8VNfc</a></p>
   </div>
   <div class="reveal">
     <div class="slides"><section>
         <section>
-          <h2>@rumyra</h2>
-          <p class="fragment fade-in">http://bit.ly/1H8N7wj</p>
+          <h2>Ruth from The Lab</h2>
+          <p class="fragment fade-in">http://goo.gl/f8VNfc</p>
           <aside class="notes">
             <p>Hi everyone, I'm rumyra<br />Not doing talk - WHERE I used to live 5 minutes down the road & come here for club nights quite a bit - penultimate talk of the day, I thought I might try & start the party a bit early.</p>
             <p>And in a browser</p>
@@ -201,7 +201,7 @@ function onMIDISuccess(midiControl) {
           </aside>
         </section>
 
-        <section data-state="backToTalk">
+        <!-- <section data-state="backToTalk">
           <img src="images/idj.jpg" />
           <aside class="notes">
             <p>So time to drink yet? Nope still not time to drink unfortunetely</p>
@@ -222,7 +222,16 @@ function onMIDISuccess(midiControl) {
           <aside class="notes">
             <p></p>
           </aside>
+        </section> -->
+
+        <section>
+          <h2>So what did we just see?</h2>
+          <p class="fragment fade-in">MIDI - a great protocol</p>
+          <p class="fragment fade-in">Web sockets - we're connected, in real time</p>
+          <p class="fragment fade-in">Browser APIs and beyond - old, present & new technology</p>
         </section>
+
+
         <section>
           <h2>Browser APIs</h2>
           <div id="apiList" class="fragment fade-in">
@@ -335,7 +344,7 @@ function onMIDISuccess(midiControl) {
   var config = document.getElementById('pusher').dataset;
   var pusher = new Pusher(config.key, {encrypted:true});
 
-  Pusher.channel_auth_endpoint = 'http://39367a56.ngrok.io/pusher/auth';
+  Pusher.channel_auth_endpoint = 'http://localhost:3000/pusher/auth';
   pusher.connection.bind('state_change', function(states) {
       console.log("Pusher's current state is " + states.current);
   });
